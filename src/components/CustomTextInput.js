@@ -3,7 +3,6 @@ import { TextInput, StyleSheet } from 'react-native'
 import colors from '../../styles/colors'
 
 const CustomTextInput = ({ value, onChangeText, placeholder, secureTextEntry }) => {
-  console.log(value, secureTextEntry)
   return (
     <TextInput
       value={value}
