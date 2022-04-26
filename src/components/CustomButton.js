@@ -7,7 +7,7 @@ const CustomButton = ({ title, onPress, type }) => {
     <Button
       title={title}
       onPress={() => onPress()}
-      color={ type === 'primary' ? colors.darkPurple : colors.pink }
+      color={ type === 'primary' ? colors.lightPurple : colors.pink }
     />
   )
 }

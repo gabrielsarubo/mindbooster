@@ -12,7 +12,7 @@ export const globalStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     paddingHorizontal: 32,
-    backgroundColor: colors.lightPurple,
+    backgroundColor: colors.darkPurple,
     color: '#fdfdfd',
   },  
 })
