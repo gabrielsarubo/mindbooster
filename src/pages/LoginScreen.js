@@ -10,12 +10,13 @@ import { globalStyles } from '../../styles/global'
 import CustomTextInput from '../components/CustomTextInput'
 import CustomButton from '../components/CustomButton'
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   
   const handleSubmit = () => {
-    console.log(email, password)
+    // console.log(email, password)
+    navigation.navigate('Menu')
   }
   
   return (
