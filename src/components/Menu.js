@@ -15,6 +15,17 @@ const Menu = () => {
     <Drawer.Navigator
       initialRouteName='MyCollections'
       drawerContent={props => <CustomDrawerContent {...props} />}
+      screenOptions={{
+        headerStyle: {
+          height: 55,
+          backgroundColor: '#4a4568',
+          borderBottomWidth: 0,
+        },
+        headerTintColor: '#fff',
+        headerTitleContainerStyle: {
+          marginLeft: 0,
+        }
+      }}
     >
       <Drawer.Screen
         name='MyCollections'
