@@ -11,10 +11,17 @@ const data_myCollections = [
   { key: 4, title: 'Pronomes', thumbnail: 'pronouns' },
 ]
 
-const MyCollectionsScreen = () => {
+const MyCollectionsScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <CollectionsList data={data_myCollections} />
+      <CollectionsList
+        data={data_myCollections}
+        onPressHandler={(collection) => {
+          navigation.navigate('Cards', {
+            collection: collection
+          })
+        }}
+      />
     </SafeAreaView>
   )
 }

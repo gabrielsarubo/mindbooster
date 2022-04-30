@@ -5,9 +5,9 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 
 Icon.loadFont()
 
-const CollectionListItem = ({ collection }) => {
+const CollectionListItem = ({ collection, onPressHandler }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => onPressHandler(collection)}>
       <View style={styles.collection_list_item}>
         <View style={styles.wrapper_image_title}>
           <View style={styles.wrapper_image}>
