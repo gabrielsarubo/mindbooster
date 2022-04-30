@@ -13,14 +13,9 @@ export default function MyCollectionsStack() {
       screenOptions={{
         animation: 'slide_from_right',
         headerStyle: {
-          height: 55,
           backgroundColor: '#4a4568',
-          borderBottomWidth: 0,
         },
         headerTintColor: '#fff',
-        headerTitleContainerStyle: {
-          marginLeft: 0,
-        }
       }}
     >
       <Stack.Screen
