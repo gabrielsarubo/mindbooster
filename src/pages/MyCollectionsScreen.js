@@ -1,5 +1,4 @@
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 
 import CollectionsList from '../components/CollectionsList'
 
@@ -13,7 +12,7 @@ const data_myCollections = [
 
 const MyCollectionsScreen = ({ navigation }) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <CollectionsList
         data={data_myCollections}
         onPressHandler={(collection) => {
@@ -22,7 +21,7 @@ const MyCollectionsScreen = ({ navigation }) => {
           })
         }}
       />
-    </SafeAreaView>
+    </View>
   )
 }
 
