@@ -11,6 +11,7 @@ export default function MyCollectionsStack() {
   return (
     <Stack.Navigator
       screenOptions={{
+        animation: 'slide_from_right',
         headerStyle: {
           height: 55,
           backgroundColor: '#4a4568',
