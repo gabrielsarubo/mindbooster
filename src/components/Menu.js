@@ -4,9 +4,7 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemL
 import MyCollectionsScreen from '../pages/MyCollectionsScreen'
 
 // Icons
-import Icon from 'react-native-vector-icons/FontAwesome'
-
-Icon.loadFont()
+import { MaterialIcons } from '@expo/vector-icons'
 
 const Drawer = createDrawerNavigator()
 
@@ -32,7 +30,7 @@ const Menu = () => {
         component={MyCollectionsScreen}
         options={{
           title: 'Minhas Coleções',
-          drawerIcon: config => <Icon name='home' size={config.size} color={config.color} />
+          drawerIcon: config => <MaterialIcons name='home' size={config.size} color={config.color} />
         }}
       />
     </Drawer.Navigator>
@@ -46,7 +44,7 @@ const CustomDrawerContent = (props) => {
       <DrawerItem 
         label='Logout'
         onPress={() => props.navigation.popToTop()}
-        icon={props => <Icon name='sign-out' size={props.size} color={props.color} />}
+        icon={props => <MaterialIcons name='logout' size={props.size} color={props.color} />}
       />
     </DrawerContentScrollView>
   )

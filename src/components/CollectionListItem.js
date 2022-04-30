@@ -1,9 +1,7 @@
 import { TouchableOpacity, View, Text, Image, StyleSheet } from 'react-native'
 
 // Icons
-import Icon from 'react-native-vector-icons/FontAwesome'
-
-Icon.loadFont()
+import { MaterialIcons } from '@expo/vector-icons'
 
 const CollectionListItem = ({ collection, onPressHandler }) => {
   return (
@@ -18,8 +16,8 @@ const CollectionListItem = ({ collection, onPressHandler }) => {
           </View>
         </View>
         <View style={styles.wrapper_buttons}>
-          <View><Icon name='pencil' size={24} color='#4472C4' /></View>
-          <View><Icon name='trash' size={24} color='#E91010' /></View>
+          <View><MaterialIcons name='create' size={24} color='#4472C4' /></View>
+          <View><MaterialIcons name='delete-forever' size={24} color='#E91010' /></View>
         </View>
       </View>
     </TouchableOpacity>
@@ -52,7 +50,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontWeight: 700,
+    fontWeight: '700',
     fontSize: 28,
     color: '#27ACA7',
   },
