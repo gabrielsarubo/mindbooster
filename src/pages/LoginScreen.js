@@ -16,7 +16,6 @@ const LoginScreen = ({ navigation }) => {
   
   const handleSubmit = () => {
     // console.log(email, password)
-    navigation.navigate('Menu')
   }
   
   return (
