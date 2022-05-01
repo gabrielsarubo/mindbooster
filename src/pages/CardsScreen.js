@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
 
 import CustomTextInput from '../components/CustomTextInput'
@@ -6,9 +8,9 @@ import { MaterialIcons } from '@expo/vector-icons'
 import CustomButton from '../components/CustomButton'
 
 const CardsScreen = ({ route }) => {
-  
+
   // console.log(route.params.collection);
-  const cards = [
+  const [cards, setCards] = useState([
     { key: 0, front: 'Arvore', back: 'Tree', },
     { key: 1, front: 'Janela', back: 'Window', },
     { key: 2, front: 'Porta', back: 'Door', },
@@ -20,7 +22,24 @@ const CardsScreen = ({ route }) => {
     { key: 8, front: 'Céu', back: 'Sky', },
     { key: 9, front: 'Arco-iris', back: 'Rainbow', },
     { key: 10, front: 'Planeta', back: 'Planet', },
-  ]
+  ])
+  const [filteredCards, setFilteredCards] = useState([...cards])
+  const [filter, setFilter] = useState('')
+
+  const handleChangeText = (value) => {
+    setFilter(value)
+
+    const filteredCards = cards.filter(card => {
+      return card.front
+        .toLowerCase()
+        .includes(value.toLowerCase())
+        || card.back
+          .toLowerCase()
+          .includes(value.toLowerCase())
+    })
+
+    setFilteredCards(filteredCards)
+  }
 
   const renderItemCard = ({ item }) => (
     <TouchableOpacity>
@@ -42,11 +61,13 @@ const CardsScreen = ({ route }) => {
       </View>
     </TouchableOpacity>
   )
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.filterWrapper}>
         <CustomTextInput
+          value={filter}
+          onChangeText={handleChangeText}
           placeholder='Filtro'
         />
       </View>
@@ -54,9 +75,9 @@ const CardsScreen = ({ route }) => {
       <View style={styles.buttonWrapper}>
         <CustomButton title='Jogar' />
       </View>
-      
+
       <FlatList
-        data={cards}
+        data={filteredCards}
         renderItem={renderItemCard}
         style={styles.flatList}
         showsVerticalScrollIndicator={false}
@@ -133,5 +154,5 @@ const styles = StyleSheet.create({
   },
 
 })
- 
+
 export default CardsScreen
