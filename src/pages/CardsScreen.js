@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
 
@@ -9,22 +9,15 @@ import CustomButton from '../components/CustomButton'
 
 const CardsScreen = ({ route }) => {
 
-  // console.log(route.params.collection);
-  const [cards, setCards] = useState([
-    { key: 0, front: 'Arvore', back: 'Tree', },
-    { key: 1, front: 'Janela', back: 'Window', },
-    { key: 2, front: 'Porta', back: 'Door', },
-    { key: 3, front: 'Parede', back: 'Wall', },
-    { key: 4, front: 'Chão', back: 'Floor', },
-    { key: 5, front: 'Cozinha', back: 'Kitchen', },
-    { key: 6, front: 'Quarto', back: 'Bedroom', },
-    { key: 7, front: 'Cadeira', back: 'Char', },
-    { key: 8, front: 'Céu', back: 'Sky', },
-    { key: 9, front: 'Arco-iris', back: 'Rainbow', },
-    { key: 10, front: 'Planeta', back: 'Planet', },
-  ])
-  const [filteredCards, setFilteredCards] = useState([...cards])
+  const [cards, setCards] = useState([])
+  const [filteredCards, setFilteredCards] = useState([])
   const [filter, setFilter] = useState('')
+
+  useEffect(() => {
+    const cards = route.params.collection.cardsList
+    setCards([...cards])
+    setFilteredCards([...cards])
+  }, [])
 
   const handleChangeText = (value) => {
     setFilter(value)
