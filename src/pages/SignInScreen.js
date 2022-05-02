@@ -10,7 +10,7 @@ import { globalStyles } from '../../styles/global'
 import CustomTextInput from '../components/CustomTextInput'
 import CustomButton from '../components/CustomButton'
 
-const LoginScreen = ({ navigation }) => {
+const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
   },
 })
  
-export default LoginScreen
+export default SignInScreen
