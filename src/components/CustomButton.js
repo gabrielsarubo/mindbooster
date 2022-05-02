@@ -6,25 +6,34 @@ const CustomButton = ({ title, onPress, type }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={styles({ type }).button}
+      style={[styles.button, styles[type]]}
     >
-      <Text style={styles().title}>{title}</Text>
+      <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>
   )
 }
 
-const styles = (props) => StyleSheet.create({
+const styles = StyleSheet.create({
   button: {
     borderRadius: 4,
     paddingVertical: 12,
     paddingHorizontal: 12,
-    backgroundColor:
-      props?.type === 'primary'
-        ? colors.lightPurple
-        : props?.type === 'secondary'
-          ? colors.pink
-          : '#51966a',
   },
+  
+  primary: {
+    backgroundColor: colors.lightPurple,
+  },
+
+  secondary: {
+    backgroundColor: colors.pink,
+  },
+  
+  outline: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
+
   title: {
     fontSize: 13,
     color: '#fff',
