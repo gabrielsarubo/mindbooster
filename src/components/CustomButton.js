@@ -15,8 +15,8 @@ const CustomButton = ({ title, onPress, type }) => {
 
 const styles = (props) => StyleSheet.create({
   button: {
-    borderRadius: 8,
-    paddingVertical: 10,
+    borderRadius: 4,
+    paddingVertical: 12,
     paddingHorizontal: 12,
     backgroundColor:
       props?.type === 'primary'
@@ -26,11 +26,12 @@ const styles = (props) => StyleSheet.create({
           : '#51966a',
   },
   title: {
-    fontSize: 18,
+    fontSize: 13,
     color: '#fff',
     fontWeight: '500',
     alignSelf: 'center',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    letterSpacing: 1.5,
   },
 })
  

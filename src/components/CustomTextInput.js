@@ -16,9 +16,9 @@ const CustomTextInput = ({ value, onChangeText, placeholder, secureTextEntry }) 
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 14,
+    paddingVertical: 12,
     paddingHorizontal: 10,
-    marginBottom: 8,
+    marginBottom: 10,
     backgroundColor: colors.inputBackground,
     borderRadius: 4,
     fontSize: 16,
