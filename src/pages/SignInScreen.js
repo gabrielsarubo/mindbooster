@@ -2,9 +2,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useState } from 'react'
 
-import { Text, View, StyleSheet } from 'react-native'
-
-import { globalStyles } from '../../styles/global'
+import { Image, Text, View, StyleSheet } from 'react-native'
 
 // Custom Components
 import CustomTextInput from '../components/CustomTextInput'
@@ -19,10 +17,11 @@ const SignInScreen = ({ navigation }) => {
   }
   
   return (
-    <SafeAreaView style={globalStyles.bodyContainer}>
+    <SafeAreaView style={styles.bodyContainer}>
       {/* // ! Logo Container */}
-      <View style={[styles.logoContainer, globalStyles.border]}>
-        <Text>MindBooster</Text>
+      <View style={styles.logoContainer}>
+        <Image source={{ uri: require('../../assets/logo-mindbooster.png'), width: 90, height: 93, }} />
+        <Image source={{ uri: require('../../assets/logotype-mindbooster.png'), width: 230, height: 64, }} />
       </View>
 
       {/* // ! Form Container */}
@@ -38,7 +37,7 @@ const SignInScreen = ({ navigation }) => {
           placeholder='Senha'
           secureTextEntry
         />
-        <Text style={[globalStyles.border]} >
+        <Text style={styles.forgotPassword}>
           Esqueci a senha
         </Text>
         <CustomButton
@@ -50,13 +49,37 @@ const SignInScreen = ({ navigation }) => {
 
       {/* // ! Bottom container */}
       <View style={styles.bottomContainer}>
-        <CustomButton title='Cadastre-se' />
+        <CustomButton title='Cadastre-se' type='secondary' />
       </View>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  bodyContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+    paddingHorizontal: 32,
+    backgroundColor: '#454161',
+    color: '#fdfdfd',
+  },  
+  
+  logoContainer: {
+    marginTop: '20%',
+    alignItems: 'center',
+  },
+
+  formContainer: {
+    marginTop: '-20%',
+  },
+
+  forgotPassword: {
+    textAlign: 'right',
+    color: '#dcdcdc',
+    marginTop: -4,
+    marginBottom: 24,
+  },
+  
   bottomContainer: {
     marginBottom: 32,
   },
