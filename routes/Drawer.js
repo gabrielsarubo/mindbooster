@@ -1,6 +1,6 @@
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer'
 
-import AuthStack from './AuthStack'
+import MyCollectionsStack from './MyCollectionsStack'
 
 // Icons
 import { MaterialIcons } from '@expo/vector-icons'
@@ -14,7 +14,7 @@ export default function Drawer() {
     >
       <RootDrawerNavigator.Screen
         name='Home'
-        component={AuthStack}
+        component={MyCollectionsStack}
         options={{
           headerShown: false,
           title: 'Minhas Coleções',
