@@ -31,7 +31,7 @@ const CustomDrawerContent = (props) => {
       <DrawerItemList {...props} />
       <DrawerItem 
         label='Sair'
-        onPress={() => props.navigation.popToTop()}
+        onPress={() => console.log('Singing out...')}
         icon={props => <MaterialIcons name='logout' size={props.size} color={props.color} />}
       />
     </DrawerContentScrollView>
