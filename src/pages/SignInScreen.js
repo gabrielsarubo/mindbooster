@@ -8,6 +8,9 @@ import { Image, Text, View, StyleSheet } from 'react-native'
 import CustomTextInput from '../components/CustomTextInput'
 import CustomButton from '../components/CustomButton'
 
+import Logo from '../../assets/logo-mindbooster-90x90.png'
+import Logotype from '../../assets/logotype-mindbooster.png'
+  
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -20,8 +23,8 @@ const SignInScreen = ({ navigation }) => {
     <SafeAreaView style={styles.bodyContainer}>
       {/* // ! Logo Container */}
       <View style={styles.logoContainer}>
-        <Image source={{ uri: require('../../assets/logo-mindbooster-90x90.png'), width: 90, height: 90, }} />
-        <Image source={{ uri: require('../../assets/logotype-mindbooster.png'), width: 230, height: 64, }} />
+        <Image source={Logo} style={styles.logo} />
+        <Image source={Logotype} style={styles.logotype} />
       </View>
 
       {/* // ! Form Container */}
@@ -69,6 +72,17 @@ const styles = StyleSheet.create({
   logoContainer: {
     marginTop: '20%',
     alignItems: 'center',
+  },
+
+  logo: {
+    width: 90,
+    height: 90,
+  },
+
+  logotype: {
+    width: 230,
+    height: 64,
+    marginHorizontal: 8,
   },
 
   formContainer: {
