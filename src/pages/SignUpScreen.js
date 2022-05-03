@@ -27,10 +27,10 @@ const SignUpScreen = ({ navigation }) => {
 
       {/* // ! Form Container */}
       <View style={styles.formContainer}>
+        <Text style={styles.h2}>
+          Preencha os dados do seu cadastro
+        </Text>
         <View style={styles.inputWrapper}>
-          <Text style={styles.h2}>
-            Preencha os dados do seu cadastro
-          </Text>
           <CustomTextInput
             value={email}
             onChangeText={setEmail}
@@ -74,19 +74,26 @@ const styles = StyleSheet.create({
   },
 
   logoContainer: {
+    marginTop: 8,
     paddingVertical: 8,
     alignItems: 'center',
     flexDirection: 'row',
+    justifyContent: 'center',
   },
 
   logotype: {
     marginHorizontal: 8,
   },
 
+  formContainer: {
+    marginTop: -48,
+  },
+
   h2: {
     color: '#dcdcdc',
     fontSize: 24,
-    marginBottom: 32,
+    textAlign: 'center',
+    marginBottom: 48,
   },
 
   inputWrapper: {
