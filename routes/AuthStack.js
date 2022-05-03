@@ -7,7 +7,11 @@ const Stack = createNativeStackNavigator()
 
 export default function AuthStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        animation: 'slide_from_right',
+      }}
+    >
       <Stack.Screen
         name='SignIn'
         component={SignInScreen}
