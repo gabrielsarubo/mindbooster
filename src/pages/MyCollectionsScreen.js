@@ -16,7 +16,7 @@ const MyCollectionsScreen = ({ navigation }) => {
       <CollectionsList
         data={data_myCollections}
         onPressHandler={(collection) => {
-          navigation.navigate('Cards', {
+          navigation.navigate('Collection', {
             collection: collection
           })
         }}
