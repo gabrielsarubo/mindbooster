@@ -7,7 +7,7 @@ import CustomTextInput from '../components/CustomTextInput'
 import CustomButton from '../components/CustomButton'
 import CardListItem from '../components/CardListItem'
 
-const CardsScreen = ({ route }) => {
+const CollectionScreen = ({ route }) => {
 
   const [cards, setCards] = useState([])
   const [filteredCards, setFilteredCards] = useState([])
@@ -61,7 +61,7 @@ const CardsScreen = ({ route }) => {
 }
 
 const styles = StyleSheet.create({
-  // ! CardsScreen styles
+  // ! CollectionScreen styles
   container: {
     flex: 1,
     backgroundColor: '#332e56',
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CardsScreen
+export default CollectionScreen
