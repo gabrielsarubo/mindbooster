@@ -1,30 +1,62 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
 import CustomButton from '../components/CustomButton'
 import Flashcard from '../components/Flashcard'
 
-const PlayScreen = () => {
+const PlayScreen = ({ route, navigation }) => {
   const [isFlipped, setIsFlipped] = useState(false)
+  const [cards, setCards] = useState([])
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    // TODO change this to getParams()
+    setCards(route.params?.cards)
+  }, [])
 
   return (
     <View style={styles.container}>
       <View style={styles.body}>
-        <View style={styles.header}>
-          <Text style={styles.counter}>Cartão 1/8</Text>
-        </View>
+        {cards.length > 0
+          ? <>
+            <View style={styles.header}>
+              <Text style={styles.counter}>Cartão {`${index + 1}/${cards.length}`}</Text>
+            </View>
 
-        <View style={styles.main}>
-          <Flashcard isFlipped={isFlipped} />
-        </View>
+            <View style={styles.main}>
+              <Flashcard
+                card={cards[index]}
+                isFlipped={isFlipped}
+              />
+            </View>
 
-        <View style={styles.footer}>
-          <CustomButton
-            title={isFlipped ? 'Próximo' : 'Virar'}
-            type='primary'
-            onPress={isFlipped ? (() => alert('Next card!')) : (() => setIsFlipped(!isFlipped))}
-          />
-        </View>
+            <View style={styles.footer}>
+              {(index === (cards.length - 1)) && (isFlipped)
+                ? (
+                  <CustomButton
+                    title='Finalizar'
+                    type='secondary'
+                    onPress={() => navigation.goBack()}
+                  />
+                )
+                : (
+                  <CustomButton
+                    title={isFlipped ? 'Próximo' : 'Virar'}
+                    type='primary'
+                    onPress={
+                      isFlipped
+                        ? (() => {
+                          setIndex(index + 1)
+                          setIsFlipped(false)
+                        })
+                        : (() => setIsFlipped(!isFlipped))}
+                  />
+                )
+              }
+            </View>
+          </>
+          : <Text>Loading...</Text>
+        }
       </View>
     </View>
   )

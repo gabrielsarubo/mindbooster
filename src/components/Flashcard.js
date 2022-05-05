@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
 
-const Flashcard = ({ isFlipped }) => {
+const Flashcard = ({ card, isFlipped }) => {
   return (
     <View style={styles.flashcard}>
       {isFlipped
@@ -9,7 +9,7 @@ const Flashcard = ({ isFlipped }) => {
             <View style={styles.rowContent}>
               <Text style={styles.label}>Frente</Text>
               <View style={styles.titleWrapper}>
-                <Text style={styles.title}>Brinquedo</Text>
+                <Text style={styles.title}>{card.front}</Text>
               </View>
             </View>
           </View>
@@ -17,12 +17,12 @@ const Flashcard = ({ isFlipped }) => {
             <View style={styles.rowContent}>
               <Text style={styles.label}>Verso</Text>
               <View style={styles.titleWrapper}>
-                <Text style={styles.title}>Toy</Text>
+                <Text style={styles.title}>{card.back}</Text>
               </View>
             </View>
           </View>
         </>)
-        : (<Text style={styles.title}>Brinquedo</Text>)
+        : (<Text style={styles.title}>{card.front}</Text>)
       }
     </View>
   )

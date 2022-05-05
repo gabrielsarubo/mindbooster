@@ -7,7 +7,7 @@ import CustomTextInput from '../components/CustomTextInput'
 import CustomButton from '../components/CustomButton'
 import CardListItem from '../components/CardListItem'
 
-const CollectionScreen = ({ route }) => {
+const CollectionScreen = ({ navigation, route }) => {
 
   const [cards, setCards] = useState([])
   const [filteredCards, setFilteredCards] = useState([])
@@ -47,7 +47,15 @@ const CollectionScreen = ({ route }) => {
       </View>
 
       <View style={styles.buttonWrapper}>
-        <CustomButton title='Jogar' />
+        <CustomButton
+          title='Jogar'
+          type='primary'
+          onPress={() => {
+            navigation.navigate('Play', {
+              cards: cards
+            })
+          }}
+        />
       </View>
 
       <FlatList
