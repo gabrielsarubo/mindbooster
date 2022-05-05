@@ -34,6 +34,11 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
   },
 
+  play: {
+    paddingHorizontal: 32,
+    backgroundColor: colors.green,
+  },
+
   title: {
     fontSize: 13,
     color: '#fff',
