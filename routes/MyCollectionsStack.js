@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MyCollectionsScreen from "../src/pages/MyCollectionsScreen";
 import CollectionScreen from "../src/pages/CollectionScreen";
 import PlayScreen from "../src/pages/PlayScreen";
+import EditCardScreen from "../src/pages/EditCardScreen";
 
 import Header from "../src/components/Header";
 
@@ -41,6 +42,14 @@ export default function MyCollectionsStack() {
           cards: route.params?.cards,
           headerTitle: 'Jogar',
           headerTitleAlign: 'center',
+        })}
+      />
+      <Stack.Screen
+        name='EditCard'
+        component={EditCardScreen}
+        options={({ route }) => ({
+          headerTitle: route.params?.action === 'create' ? 'Novo Cartão' : 'Editar Cartão',
+          action: route.params?.action
         })}
       />
     </Stack.Navigator>
