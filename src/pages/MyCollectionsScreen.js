@@ -1,6 +1,9 @@
 import { View, StyleSheet } from 'react-native'
 
+import { globalStyles } from '../../styles/global'
+
 import CollectionsList from '../components/CollectionsList'
+import CustomFloatingButton from '../components/CustomFloatingButton'
 
 const data_myCollections = [
   { key: 0, title: 'Objetos', thumbnail: 'ball', cardsList: [{ key: 0, front: 'Arvore', back: 'Tree', }, { key: 1, front: 'Janela', back: 'Window', },] },
@@ -21,6 +24,10 @@ const MyCollectionsScreen = ({ navigation }) => {
           })
         }}
       />
+
+      <View style={globalStyles.floatingButtonWrapper}>
+        <CustomFloatingButton/>
+      </View>
     </View>
   )
 }
