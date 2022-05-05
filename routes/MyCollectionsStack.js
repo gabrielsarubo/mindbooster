@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import MyCollectionsScreen from "../src/pages/MyCollectionsScreen";
 import CollectionScreen from "../src/pages/CollectionScreen";
+import PlayScreen from "../src/pages/PlayScreen";
 
 import Header from "../src/components/Header";
 
@@ -32,6 +33,15 @@ export default function MyCollectionsStack() {
         name='Collection'
         component={CollectionScreen}
         options={({ route }) => ({ title: route.params?.collection.title })}
+      />
+      <Stack.Screen
+        name='Play'
+        component={PlayScreen}
+        options={({ route }) => ({
+          cards: route.params?.cards,
+          headerTitle: 'Jogar',
+          headerTitleAlign: 'center',
+        })}
       />
     </Stack.Navigator>
   )
