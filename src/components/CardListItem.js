@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 import { MaterialIcons } from '@expo/vector-icons'
 
-const CardListItem = ({ item }) => {
+const CardListItem = ({ item, onPressEdit, onPressDelete }) => {
   return (
     <TouchableOpacity>
       <View style={styles.cardListItem}>
@@ -17,8 +17,16 @@ const CardListItem = ({ item }) => {
           </View>
         </View>
         <View style={styles.wrapperButtons}>
-          <View style={styles.button}><MaterialIcons name='create' size={28} color='#4472C4' /></View>
-          <View style={styles.button}><MaterialIcons name='delete-forever' size={28} color='#E91010' /></View>
+          <TouchableOpacity onPress={() => onPressEdit(item.key)}>
+            <View style={styles.button}>
+              <MaterialIcons name='create' size={28} color='#4472C4' />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => onPressDelete(item.key)}>
+            <View style={styles.button}>
+              <MaterialIcons name='delete-forever' size={28} color='#E91010' />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>
