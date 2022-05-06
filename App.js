@@ -9,20 +9,24 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import MainNavigator from './routes/Drawer'
 import AuthNavigator from './routes/AuthStack'
 
+import CollectionContextProvider from './src/contexts/CollectionContext'
+
 const App = () => {
   const [userToken, setUserToken] = useState(true)
   
   return (
-    <SafeAreaProvider>
-      <StatusBar style='light' />
-      <NavigationContainer>
-        {
-          userToken
-            ? <MainNavigator />
-            : <AuthNavigator />
-        }
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <CollectionContextProvider>
+      <SafeAreaProvider>
+        <StatusBar style='light' />
+        <NavigationContainer>
+          {
+            userToken
+              ? <MainNavigator />
+              : <AuthNavigator />
+          }
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </CollectionContextProvider>
   )
 }
  

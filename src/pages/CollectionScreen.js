@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 
 import { View, FlatList, StyleSheet } from 'react-native'
 
@@ -9,20 +9,27 @@ import CustomButton from '../components/CustomButton'
 import CustomFloatingButton from '../components/CustomFloatingButton'
 import CardListItem from '../components/CardListItem'
 
+import { CollectionContext } from '../contexts/CollectionContext'
+
 const CollectionScreen = ({ navigation, route }) => {
+  const { collections, deleteCard } = useContext(CollectionContext)
 
   const [cards, setCards] = useState([])
   const [filteredCards, setFilteredCards] = useState([])
   const [filter, setFilter] = useState('')
-  // const [collectionId, setCollectionId] = useState()
-  // const [cardId, setCardId] = useState()
+
+  const [collectionKey, setCollectionKey] = useState()
 
   useEffect(() => {
-    const cards = route.params.collection.cardsList
-    // setCollectionId(route.params.collection.key)
-    setCards([...cards])
-    setFilteredCards([...cards])
-  }, [])
+    // Recover the cards from the CollectionContext using the collection key
+    const _collectionKey = route.params.collection.key
+    setCollectionKey(_collectionKey)
+
+    const _collection = collections.find(collection => collection.key === _collectionKey)
+
+    setCards([..._collection.cardsList])
+    setFilteredCards([..._collection.cardsList])
+  }, [collections])
 
   const handleChangeText = (value) => {
     setFilter(value)
@@ -39,16 +46,10 @@ const CollectionScreen = ({ navigation, route }) => {
     setFilteredCards(filteredCards)
   }
 
-  const handlePressEdit = (key) => {
-    // setCardId(key)
-
-    // console.log('edit -> cardId collectionId', key, collectionId);
-  }
+  const handlePressEdit = (key) => {}
 
   const handlePressDelete = (key) => {
-    // setCardId(key)
-
-    // console.log('delete -> cardId collectionId', key, collectionId);
+    deleteCard(collectionKey, key)
   }
 
   const renderItemCard = ({ item }) => (
