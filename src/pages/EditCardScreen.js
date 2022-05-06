@@ -54,10 +54,9 @@ const EditCardScreen = ({ route, navigation }) => {
   }
 
   const handlePressUpdate = () => {
-    // TODO fix: get the existing key instead of generating a new one
     // TODO change the way the ID/key of the card is generated
     const _card = {
-      key: Math.random() * 10,
+      key: card.key,
       front: front,
       back: back,
     }
