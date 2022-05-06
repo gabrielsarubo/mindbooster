@@ -1,13 +1,59 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
+
 import CustomButton from '../components/CustomButton'
 
-const EditCardScreen = ({ route }) => {
+import { CollectionContext } from '../contexts/CollectionContext'
+
+const EditCardScreen = ({ route, navigation }) => {
+  const { collections, editCard } = useContext(CollectionContext)
+  
   const [action, setAction] = useState()
+  const [cardId, setCardId] = useState()
+  const [collectionId, setCollectionId] = useState()
+
+  const [card, setCard] = useState({})
+
+  const [front, setFront] = useState('')
+  const [back, setBack] = useState('')
   
   useEffect(() => {
-    setAction(route.params?.action)
+    const { action, cardId, collectionId } = route.params
+
+    setAction(action)
+    setCardId(cardId)
+    setCollectionId(collectionId)
+
+    // If user wants to edit a card,
+    // then recover card from CollectionContext and store it in state
+    if (action === 'edit') {
+      const _card =
+        collections.find(collection => collection.key === collectionId)
+          .cardsList.find(card => card.key === cardId)
+  
+      setCard(_card)
+
+      setFront(_card.front)
+      setBack(_card.back)
+    }
   }, [])
+
+  const handlePressCreate = () => {}
+
+  const handlePressUpdate = () => {
+    // TODO change the way the ID/key of the card is generated
+    const _card = {
+      key: Math.random() * 10,
+      front: front,
+      back: back,
+    }
+
+    setCard(_card)
+
+    editCard(collectionId, cardId, _card)
+
+    navigation.goBack()
+  }
   
   return (
     <View style={styles.container}>
@@ -23,6 +69,8 @@ const EditCardScreen = ({ route }) => {
                   <Text style={styles.label}>Frente</Text>
                   <View style={styles.titleWrapper}>
                     <TextInput
+                      defaultValue={ front }
+                      onChangeText={(value) => setFront(value)}
                       placeholder='Digite aqui...'
                       style={styles.textInput}
                     />
@@ -34,6 +82,8 @@ const EditCardScreen = ({ route }) => {
                   <Text style={styles.label}>Verso</Text>
                   <View style={styles.titleWrapper}>
                     <TextInput
+                      defaultValue={ back }
+                      onChangeText={(value) => setBack(value)}
                       placeholder='Digite aqui...'
                       style={styles.textInput}
                     />
@@ -45,12 +95,14 @@ const EditCardScreen = ({ route }) => {
           <CustomButton
             title={ action === 'create' ? 'Cadastrar' : 'Atualizar' }
             type='primary'
+            onPress={action === 'create' ? handlePressCreate : handlePressUpdate}
           />
         </View>
         <View style={styles.footer}>
           <CustomButton
             title='Cancelar'
             type='outline'
+            onPress={() => navigation.goBack()}
           />
         </View>
       </View>

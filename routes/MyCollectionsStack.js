@@ -49,7 +49,9 @@ export default function MyCollectionsStack() {
         component={EditCardScreen}
         options={({ route }) => ({
           headerTitle: route.params?.action === 'create' ? 'Novo Cartão' : 'Editar Cartão',
-          action: route.params?.action
+          action: route.params?.action,
+          cardId: route.params?.cardId,
+          collectionId: route.params?.collectionId,
         })}
       />
     </Stack.Navigator>

@@ -46,7 +46,13 @@ const CollectionScreen = ({ navigation, route }) => {
     setFilteredCards(filteredCards)
   }
 
-  const handlePressEdit = (key) => {}
+  const handlePressEdit = (cardId) => {
+    navigation.navigate('EditCard', {
+      action: 'edit',
+      cardId: cardId,
+      collectionId: collectionKey
+    })
+  }
 
   const handlePressDelete = (key) => {
     deleteCard(collectionKey, key)
@@ -90,7 +96,12 @@ const CollectionScreen = ({ navigation, route }) => {
       />
 
       <View style={globalStyles.floatingButtonWrapper}>
-        <CustomFloatingButton onPress={() => navigation.navigate('EditCard', { action: 'create' })} />
+        <CustomFloatingButton
+          onPress={() => navigation.navigate('EditCard', {
+            action: 'create',
+            collectionId: collectionKey
+          })}
+        />
       </View>
     </View>
   )

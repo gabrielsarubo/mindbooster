@@ -11,19 +11,30 @@ const CollectionContextProvider = (props) => {
     { key: 4, title: 'Pronomes', thumbnail: 'pronouns', cardsList: [{ key: 0, front: 'Eles/elas', back: 'They', }, { key: 1, front: 'Nós', back: 'We', },] },
   ])
 
+  const editCard = (collectionKey, cardKey, newCard) => {
+    const _collections = [...collections]
+
+    const indexOfCollection = collections.findIndex(collection => collection.key === collectionKey)
+    const indexOfCard = collections[indexOfCollection].cardsList.findIndex(card => card.key === cardKey)
+
+    _collections[indexOfCollection].cardsList[indexOfCard] = newCard
+
+    setCollections(_collections)
+  }
+
   const deleteCard = (collectionKey, cardKey) => {
     const _collections = [...collections]
 
     const indexOfCollection = collections.findIndex(collection => collection.key === collectionKey)
     const indexOfCard = collections[indexOfCollection].cardsList.findIndex(card => card.key === cardKey)
-    
+
     _collections[indexOfCollection].cardsList.splice(indexOfCard, 1)
-    
+
     setCollections(_collections)
   }
 
   return (
-    <CollectionContext.Provider value={{ collections, deleteCard }}>
+    <CollectionContext.Provider value={{ collections, editCard, deleteCard }}>
       {props.children}
     </CollectionContext.Provider>
   )
