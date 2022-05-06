@@ -11,6 +11,16 @@ const CollectionContextProvider = (props) => {
     { key: 4, title: 'Pronomes', thumbnail: 'pronouns', cardsList: [{ key: 0, front: 'Eles/elas', back: 'They', }, { key: 1, front: 'Nós', back: 'We', },] },
   ])
 
+  const createCard = (collectionKey, newCard) => {
+    const _collections = [...collections]
+
+    const indexOfCollection = collections.findIndex(collection => collection.key === collectionKey)
+
+    _collections[indexOfCollection].cardsList.push(newCard)
+
+    setCollections(_collections)
+  }
+
   const editCard = (collectionKey, cardKey, newCard) => {
     const _collections = [...collections]
 
@@ -34,7 +44,7 @@ const CollectionContextProvider = (props) => {
   }
 
   return (
-    <CollectionContext.Provider value={{ collections, editCard, deleteCard }}>
+    <CollectionContext.Provider value={{ collections, createCard, editCard, deleteCard }}>
       {props.children}
     </CollectionContext.Provider>
   )

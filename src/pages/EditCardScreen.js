@@ -6,7 +6,7 @@ import CustomButton from '../components/CustomButton'
 import { CollectionContext } from '../contexts/CollectionContext'
 
 const EditCardScreen = ({ route, navigation }) => {
-  const { collections, editCard } = useContext(CollectionContext)
+  const { collections, createCard, editCard } = useContext(CollectionContext)
   
   const [action, setAction] = useState()
   const [cardId, setCardId] = useState()
@@ -38,9 +38,23 @@ const EditCardScreen = ({ route, navigation }) => {
     }
   }, [])
 
-  const handlePressCreate = () => {}
+  const handlePressCreate = () => {
+    // TODO change the way the ID/key of the card is generated
+    const _card = {
+      key: Math.random() * 10,
+      front: front,
+      back: back,
+    }
+
+    setCard(_card)
+
+    createCard(collectionId, _card)
+
+    navigation.goBack()
+  }
 
   const handlePressUpdate = () => {
+    // TODO fix: get the existing key instead of generating a new one
     // TODO change the way the ID/key of the card is generated
     const _card = {
       key: Math.random() * 10,
