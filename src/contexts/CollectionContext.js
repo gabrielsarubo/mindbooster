@@ -8,6 +8,18 @@ const CollectionContextProvider = (props) => {
     { key: 1, title: 'Animais', thumbnailLocalUri: 'https://www.freeiconspng.com/uploads/soccer-ball-icon-11.png', cardsList: [{ key: 0, front: 'Cavalo', back: 'Horse', }, { key: 1, front: 'Rato', back: 'Mouse', },] },
   ])
 
+  const editCollectionMetadata = (collectionId, newMetadata) => {
+    const _collections = [...collections]
+
+    const indexOfCollection = collections.findIndex(collection => collection.key === collectionId)
+    
+    _collections[indexOfCollection].title = newMetadata.title
+    _collections[indexOfCollection].desc = newMetadata.desc
+    _collections[indexOfCollection].thumbnailLocalUri = newMetadata.thumbnailLocalUri
+
+    setCollections(_collections)
+  }
+
   const createCollection = (newCollection) => {
     const _collections = [...collections]
 
@@ -49,7 +61,14 @@ const CollectionContextProvider = (props) => {
   }
 
   return (
-    <CollectionContext.Provider value={{ collections, createCollection, createCard, editCard, deleteCard }}>
+    <CollectionContext.Provider value={{
+      collections,
+      createCollection,
+      editCollectionMetadata,
+      createCard,
+      editCard,
+      deleteCard
+    }}>
       {props.children}
     </CollectionContext.Provider>
   )

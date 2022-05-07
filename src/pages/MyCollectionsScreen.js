@@ -12,6 +12,13 @@ const MyCollectionsScreen = ({ navigation }) => {
   // TODO should this be inside the useEffect hook?
   const { collections } = useContext(CollectionContext)
 
+  const handlePressEdit = (collectionId) => {
+    navigation.navigate('EditCollection', {
+      action: 'edit',
+      collectionId: collectionId,
+    })
+  }
+
   return (
     <View style={styles.container}>
       <CollectionsList
@@ -21,6 +28,7 @@ const MyCollectionsScreen = ({ navigation }) => {
             collection: collection
           })
         }}
+        onPressEdit={handlePressEdit}
       />
 
       <View style={globalStyles.floatingButtonWrapper}>

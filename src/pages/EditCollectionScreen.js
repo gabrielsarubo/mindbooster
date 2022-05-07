@@ -9,7 +9,7 @@ import CustomImageInput from '../components/CustomImageInput'
 import { CollectionContext } from '../contexts/CollectionContext'
 
 const EditCollectionScreen = ({ route, navigation }) => {
-  const { createCollection } = useContext(CollectionContext)
+  const { collections, createCollection, editCollectionMetadata } = useContext(CollectionContext)
 
   const [action, setAction] = useState()
   const [collectionId, setCollectionId] = useState()
@@ -22,7 +22,22 @@ const EditCollectionScreen = ({ route, navigation }) => {
   const [selectedImage, setSelectedImage] = useState(null)
 
   useEffect(() => {
-    setAction(route.params?.action)
+    const { action, collectionId } = route.params
+    
+    setAction(action)
+    setCollectionId(collectionId)
+
+    // If user wants to edit a collection,
+    // then recover collection data from CollectionContext and store it away in state
+    if (action === 'edit') {
+      const _collection = collections.find(collection => collection.key === collectionId)
+
+      setCollection(_collection)
+
+      setTitle(_collection.title)
+      setDesc(_collection?.desc)
+      setSelectedImage({ localUri: _collection.thumbnailLocalUri})
+    }
   }, [])
 
   let openImagePickerAsync = async () => {
@@ -58,7 +73,17 @@ const EditCollectionScreen = ({ route, navigation }) => {
     navigation.goBack()
   }
 
-  const handlePressUpdate = () => { }
+  const handlePressUpdate = () => {
+    const newMetadata = {
+      title: title,
+      desc: desc,
+      thumbnailLocalUri: selectedImage.localUri,
+    }
+    
+    editCollectionMetadata(collectionId, newMetadata)
+    
+    navigation.goBack()
+  }
 
   return (
     <View style={styles.container}>

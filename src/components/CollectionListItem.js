@@ -3,7 +3,7 @@ import { TouchableOpacity, View, Text, Image, StyleSheet } from 'react-native'
 // Icons
 import { MaterialIcons } from '@expo/vector-icons'
 
-const CollectionListItem = ({ collection, onPressHandler }) => {
+const CollectionListItem = ({ collection, onPressHandler, onPressEdit }) => {
   return (
     <TouchableOpacity onPress={() => onPressHandler(collection)}>
       <View style={styles.collection_list_item}>
@@ -16,7 +16,9 @@ const CollectionListItem = ({ collection, onPressHandler }) => {
           </View>
         </View>
         <View style={styles.wrapper_buttons}>
-          <View><MaterialIcons name='create' size={24} color='#4472C4' /></View>
+          <TouchableOpacity onPress={() => onPressEdit(collection.key)}>
+            <MaterialIcons name='create' size={24} color='#4472C4' />
+          </TouchableOpacity>
           <View><MaterialIcons name='delete-forever' size={24} color='#E91010' /></View>
         </View>
       </View>
