@@ -10,13 +10,17 @@ import { CollectionContext } from '../contexts/CollectionContext'
 
 const MyCollectionsScreen = ({ navigation }) => {
   // TODO should this be inside the useEffect hook?
-  const { collections } = useContext(CollectionContext)
+  const { collections, deleteCollection } = useContext(CollectionContext)
 
   const handlePressEdit = (collectionId) => {
     navigation.navigate('EditCollection', {
       action: 'edit',
       collectionId: collectionId,
     })
+  }
+
+  const handlePressDelete = (collectionId) => {
+    deleteCollection(collectionId)
   }
 
   return (
@@ -29,6 +33,7 @@ const MyCollectionsScreen = ({ navigation }) => {
           })
         }}
         onPressEdit={handlePressEdit}
+        onPressDelete={handlePressDelete}
       />
 
       <View style={globalStyles.floatingButtonWrapper}>

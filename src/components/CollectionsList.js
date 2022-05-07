@@ -2,13 +2,14 @@ import { FlatList, View, StyleSheet } from 'react-native';
 
 import CollectionListItem from './CollectionListItem';
 
-const CollectionsList = ({ data, onPressHandler, onPressEdit }) => {
+const CollectionsList = ({ data, onPressHandler, onPressEdit, onPressDelete }) => {
   
   const renderListItem = ({ item }) => (
     <CollectionListItem
       collection={item}
       onPressHandler={onPressHandler}
       onPressEdit={onPressEdit}
+      onPressDelete={onPressDelete}
     />
   )
 

@@ -28,6 +28,12 @@ const CollectionContextProvider = (props) => {
     setCollections(_collections)
   }
 
+  const deleteCollection = (collectionId) => {
+    const _collections = collections.filter(collection => collection.key !== collectionId)
+
+    setCollections(_collections)
+  }
+
   const createCard = (collectionKey, newCard) => {
     const _collections = [...collections]
 
@@ -65,6 +71,7 @@ const CollectionContextProvider = (props) => {
       collections,
       createCollection,
       editCollectionMetadata,
+      deleteCollection,
       createCard,
       editCard,
       deleteCard
