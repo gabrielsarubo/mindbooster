@@ -4,6 +4,7 @@ import MyCollectionsScreen from "../src/pages/MyCollectionsScreen";
 import CollectionScreen from "../src/pages/CollectionScreen";
 import PlayScreen from "../src/pages/PlayScreen";
 import EditCardScreen from "../src/pages/EditCardScreen";
+import EditCollectionScreen from "../src/pages/EditCollectionScreen";
 
 import Header from "../src/components/Header";
 
@@ -51,6 +52,15 @@ export default function MyCollectionsStack() {
           headerTitle: route.params?.action === 'create' ? 'Novo Cartão' : 'Editar Cartão',
           action: route.params?.action,
           cardId: route.params?.cardId,
+          collectionId: route.params?.collectionId,
+        })}
+      />
+      <Stack.Screen
+        name='EditCollection'
+        component={EditCollectionScreen}
+        options={({ route }) => ({
+          headerTitle: route.params?.action === 'create' ? 'Nova Coleção' : 'Editar Coleção',
+          action: route.params?.action,
           collectionId: route.params?.collectionId,
         })}
       />
