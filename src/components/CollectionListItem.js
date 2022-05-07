@@ -9,10 +9,10 @@ const CollectionListItem = ({ collection, onPressHandler }) => {
       <View style={styles.collection_list_item}>
         <View style={styles.wrapper_image_title}>
           <View style={styles.wrapper_image}>
-            <Image source={{ uri: collection.thumbnailLocalUri, width: 75, height: 75, }} />
+            <Image source={{ uri: collection.thumbnailLocalUri }} style={styles.thumbnail} />
           </View>
           <View style={styles.wrapper_title}>
-            <Text style={styles.title}>{collection.title}</Text>
+            <Text style={styles.title} numberOfLines={1}>{collection.title}</Text>
           </View>
         </View>
         <View style={styles.wrapper_buttons}>
@@ -43,9 +43,14 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
 
-  image: {},
+  thumbnail: {
+    width: 75,
+    height: 75,
+    borderRadius: 75,
+  },
 
   wrapper_title: {
+    maxWidth: 180,
     justifyContent: 'center',
   },
 
