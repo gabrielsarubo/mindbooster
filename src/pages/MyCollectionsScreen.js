@@ -24,7 +24,11 @@ const MyCollectionsScreen = ({ navigation }) => {
       />
 
       <View style={globalStyles.floatingButtonWrapper}>
-        <CustomFloatingButton/>
+        <CustomFloatingButton
+          onPress={() => navigation.navigate('EditCollection', {
+            action: 'create',
+          })}
+        />
       </View>
     </View>
   )
@@ -36,5 +40,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#332e56',
   },
 })
- 
+
 export default MyCollectionsScreen

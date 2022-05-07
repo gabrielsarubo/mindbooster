@@ -9,8 +9,6 @@ const CollectionContextProvider = (props) => {
   ])
 
   const createCollection = (newCollection) => {
-    console.log(newCollection)
-
     const _collections = [...collections]
 
     _collections.push(newCollection)

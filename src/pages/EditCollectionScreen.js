@@ -9,7 +9,7 @@ import CustomImageInput from '../components/CustomImageInput'
 import { CollectionContext } from '../contexts/CollectionContext'
 
 const EditCollectionScreen = ({ route, navigation }) => {
-  const { collections } = useContext(CollectionContext)
+  const { createCollection } = useContext(CollectionContext)
 
   const [action, setAction] = useState()
   const [collectionId, setCollectionId] = useState()
@@ -20,6 +20,10 @@ const EditCollectionScreen = ({ route, navigation }) => {
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
   const [selectedImage, setSelectedImage] = useState(null)
+
+  useEffect(() => {
+    setAction(route.params?.action)
+  }, [])
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync()
@@ -40,7 +44,19 @@ const EditCollectionScreen = ({ route, navigation }) => {
     setSelectedImage({ localUri: pickerResult.uri })
   }
 
-  const handlePressCreate = () => { }
+  const handlePressCreate = () => {
+    const newCollection = {
+      key: Math.random() * 10,
+      title: title,
+      desc: desc,
+      thumbnailLocalUri: selectedImage.localUri,
+      cardsList: [],
+    }
+
+    createCollection(newCollection)
+    
+    navigation.goBack()
+  }
 
   const handlePressUpdate = () => { }
 
