@@ -9,7 +9,7 @@ const CollectionListItem = ({ collection, onPressHandler }) => {
       <View style={styles.collection_list_item}>
         <View style={styles.wrapper_image_title}>
           <View style={styles.wrapper_image}>
-            <Image source={{ uri: 'https://www.freeiconspng.com/uploads/soccer-ball-icon-11.png', width: 75, height: 75, }} />
+            <Image source={{ uri: collection.thumbnailLocalUri, width: 75, height: 75, }} />
           </View>
           <View style={styles.wrapper_title}>
             <Text style={styles.title}>{collection.title}</Text>

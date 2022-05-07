@@ -4,12 +4,19 @@ export const CollectionContext = createContext()
 
 const CollectionContextProvider = (props) => {
   const [collections, setCollections] = useState([
-    { key: 0, title: 'Objetos', thumbnail: 'ball', cardsList: [{ key: 0, front: 'Arvore', back: 'Tree', }, { key: 1, front: 'Janela', back: 'Window', },] },
-    { key: 1, title: 'Cores', thumbnail: 'colors', cardsList: [{ key: 0, front: 'Vermelho', back: 'Red', }, { key: 1, front: 'Laranja', back: 'Orange', }, { key: 2, front: 'Amarelo', back: 'Yellow', }, { key: 3, front: 'Verde', back: 'Green', }, { key: 4, front: 'Azul', back: 'Blue', }, { key: 5, front: 'Indigo', back: 'Indigo', },] },
-    { key: 2, title: 'Animais', thumbnail: 'animals', cardsList: [{ key: 0, front: 'Cavalo', back: 'Horse', }, { key: 1, front: 'Rato', back: 'Mouse', },] },
-    { key: 3, title: 'Adjetivos', thumbnail: 'adjectives', cardsList: [{ key: 0, front: 'Inefável', back: 'Inefable', }, { key: 1, front: 'Bonito', back: 'Pretty', },] },
-    { key: 4, title: 'Pronomes', thumbnail: 'pronouns', cardsList: [{ key: 0, front: 'Eles/elas', back: 'They', }, { key: 1, front: 'Nós', back: 'We', },] },
+    { key: 0, title: 'Cores', thumbnailLocalUri: 'https://www.freeiconspng.com/uploads/soccer-ball-icon-11.png', cardsList: [{ key: 0, front: 'Vermelho', back: 'Red', }, { key: 1, front: 'Laranja', back: 'Orange', }, { key: 2, front: 'Amarelo', back: 'Yellow', }, { key: 3, front: 'Verde', back: 'Green', }, { key: 4, front: 'Azul', back: 'Blue', }, { key: 5, front: 'Indigo', back: 'Indigo', },] },
+    { key: 1, title: 'Animais', thumbnailLocalUri: 'https://www.freeiconspng.com/uploads/soccer-ball-icon-11.png', cardsList: [{ key: 0, front: 'Cavalo', back: 'Horse', }, { key: 1, front: 'Rato', back: 'Mouse', },] },
   ])
+
+  const createCollection = (newCollection) => {
+    console.log(newCollection)
+
+    const _collections = [...collections]
+
+    _collections.push(newCollection)
+
+    setCollections(_collections)
+  }
 
   const createCard = (collectionKey, newCard) => {
     const _collections = [...collections]
@@ -44,7 +51,7 @@ const CollectionContextProvider = (props) => {
   }
 
   return (
-    <CollectionContext.Provider value={{ collections, createCard, editCard, deleteCard }}>
+    <CollectionContext.Provider value={{ collections, createCollection, createCard, editCard, deleteCard }}>
       {props.children}
     </CollectionContext.Provider>
   )
