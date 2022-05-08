@@ -1,8 +1,11 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import firebase from '../config/firebase'
+import 'firebase/auth'
+
 import { useState } from 'react'
 
-import { Image, Text, View, StyleSheet } from 'react-native'
+import { ActivityIndicator, Image, Text, View, StyleSheet } from 'react-native'
 
 // Custom Components
 import CustomTextInput from '../components/CustomTextInput'
@@ -10,15 +13,32 @@ import CustomButton from '../components/CustomButton'
 
 import Logo from '../../assets/logo-mindbooster-90x90.png'
 import Logotype from '../../assets/logotype-mindbooster.png'
-  
+
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  
+
+  // Helper states
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleSubmit = () => {
-    // console.log(email, password)
+    setIsLoading(true)
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        // Signed in
+        const user = userCredential.user
+      })
+      .catch(error => {
+        const errorCode = error.code
+        const errorMessage = error.message
+        alert('Usuário ou senha incorreto!')
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
-  
+
   return (
     <SafeAreaView style={styles.bodyContainer}>
       {/* // ! Logo Container */}
@@ -45,11 +65,16 @@ const SignInScreen = ({ navigation }) => {
             Esqueci a senha
           </Text>
         </View>
-        <CustomButton
-          title='Entrar'
-          onPress={handleSubmit}
-          type='primary'
-        />
+        {isLoading
+          ? <ActivityIndicator color='#fff' />
+          : (
+            <CustomButton
+              title='Entrar'
+              onPress={handleSubmit}
+              type='primary'
+            />
+          )
+        }
       </View>
 
       {/* // ! Bottom container */}
@@ -67,8 +92,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: '#454161',
     color: '#fdfdfd',
-  },  
-  
+  },
+
   logoContainer: {
     marginTop: '20%',
     alignItems: 'center',
@@ -98,10 +123,10 @@ const styles = StyleSheet.create({
     color: '#dcdcdc',
     marginTop: -4,
   },
-  
+
   bottomContainer: {
     marginBottom: 32,
   },
 })
- 
+
 export default SignInScreen

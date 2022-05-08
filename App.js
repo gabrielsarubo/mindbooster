@@ -12,7 +12,7 @@ import AuthNavigator from './routes/AuthStack'
 import CollectionContextProvider from './src/contexts/CollectionContext'
 
 const App = () => {
-  const [userToken, setUserToken] = useState(true)
+  const [userToken, setUserToken] = useState(false)
   
   return (
     <CollectionContextProvider>
