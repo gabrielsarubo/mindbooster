@@ -1,8 +1,11 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import firebase from '../config/firebase'
+import 'firebase/auth'
+
 import { useState } from 'react'
 
-import { Image, Text, View, StyleSheet } from 'react-native'
+import { Alert, ActivityIndicator, Image, Text, View, StyleSheet } from 'react-native'
 
 // Custom Components
 import CustomTextInput from '../components/CustomTextInput'
@@ -15,11 +18,35 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
-  
+
+  // Helper states and variables
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleSubmit = () => {
-    // console.log(email, password)
+    setIsLoading(true)
+
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        const user = userCredential.user
+        console.log(user)
+        Alert.alert(
+          'Conta Criada',
+          `Sua nova conta com o email ${email} foi criada com sucesso`,
+          [{ text: 'Ir para tela inicial', onPress: () => console.log('Going to Home...'), }]
+        )
+      })
+      .catch(() => {
+        Alert.alert(
+          'Ops, algo deu errado',
+          'Confira suas informações',
+          [{ text: 'OK', onPress: () => console.log('OK Pressed'), }]
+        )
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
-  
+
   return (
     <SafeAreaView style={styles.bodyContainer}>
       {/* // ! Logo Container */}
@@ -52,11 +79,14 @@ const SignUpScreen = ({ navigation }) => {
             secureTextEntry
           />
         </View>
-        <CustomButton
-          title='Cadastrar'
-          onPress={handleSubmit}
-          type='primary'
-        />
+        {isLoading
+          ? <ActivityIndicator color='#fff' size={24} />
+          : <CustomButton
+            title='Cadastrar'
+            onPress={handleSubmit}
+            type='primary'
+          />
+        }
       </View>
 
       {/* // ! Bottom container */}
@@ -109,10 +139,10 @@ const styles = StyleSheet.create({
   inputWrapper: {
     marginBottom: 16,
   },
-  
+
   bottomContainer: {
     marginBottom: 32,
   },
 })
- 
+
 export default SignUpScreen
