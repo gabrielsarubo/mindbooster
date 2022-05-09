@@ -1,7 +1,8 @@
 import { TouchableOpacity, View, Text, Image, StyleSheet } from 'react-native'
-
 // Icons
 import { MaterialIcons } from '@expo/vector-icons'
+// Assets
+import ThumbnailPlaceholder from '../../assets/placeholder-thumbnail.png'
 
 const CollectionListItem = ({ collection, onPressHandler, onPressEdit, onPressDelete }) => {
   return (
@@ -9,7 +10,14 @@ const CollectionListItem = ({ collection, onPressHandler, onPressEdit, onPressDe
       <View style={styles.collection_list_item}>
         <View style={styles.wrapper_image_title}>
           <View style={styles.wrapper_image}>
-            <Image source={{ uri: collection.thumbnailLocalUri }} style={styles.thumbnail} />
+            <Image
+              source={
+                collection?.thumbnailLocalUri
+                  ? { uri: collection.thumbnailLocalUri }
+                  : ThumbnailPlaceholder
+              }
+              style={styles.thumbnail}
+            />
           </View>
           <View style={styles.wrapper_title}>
             <Text style={styles.title} numberOfLines={1}>{collection.title}</Text>

@@ -14,6 +14,7 @@ const CustomTextInput = ({
       secureTextEntry={secureTextEntry}
       multiline={multiline}
       numberOfLines={numberOfLines}
+      textAlignVertical='top'
       style={styles.container}
     />
   )

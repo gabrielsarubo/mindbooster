@@ -4,8 +4,8 @@ export const CollectionContext = createContext()
 
 const CollectionContextProvider = (props) => {
   const [collections, setCollections] = useState([
-    { key: 0, title: 'Cores', thumbnailLocalUri: 'https://www.freeiconspng.com/uploads/soccer-ball-icon-11.png', cardsList: [{ key: 0, front: 'Vermelho', back: 'Red', }, { key: 1, front: 'Laranja', back: 'Orange', }, { key: 2, front: 'Amarelo', back: 'Yellow', }, { key: 3, front: 'Verde', back: 'Green', }, { key: 4, front: 'Azul', back: 'Blue', }, { key: 5, front: 'Indigo', back: 'Indigo', },] },
-    { key: 1, title: 'Animais', thumbnailLocalUri: 'https://www.freeiconspng.com/uploads/soccer-ball-icon-11.png', cardsList: [{ key: 0, front: 'Cavalo', back: 'Horse', }, { key: 1, front: 'Rato', back: 'Mouse', },] },
+    { key: 0, title: 'Cores', desc: 'Uma breve descrição sobre esta coleção', thumbnailLocalUri: null, cardsList: [{ key: 0, front: 'Vermelho', back: 'Red', }, { key: 1, front: 'Laranja', back: 'Orange', }, { key: 2, front: 'Amarelo', back: 'Yellow', }, { key: 3, front: 'Verde', back: 'Green', }, { key: 4, front: 'Azul', back: 'Blue', }, { key: 5, front: 'Indigo', back: 'Indigo', },] },
+    { key: 1, title: 'Animais', desc: 'Uma breve descrição sobre esta coleção', thumbnailLocalUri: null, cardsList: [{ key: 0, front: 'Cavalo', back: 'Horse', }, { key: 1, front: 'Rato', back: 'Mouse', },] },
   ])
 
   const editCollectionMetadata = (collectionId, newMetadata) => {

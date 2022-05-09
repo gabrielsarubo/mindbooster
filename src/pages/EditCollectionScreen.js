@@ -36,7 +36,7 @@ const EditCollectionScreen = ({ route, navigation }) => {
 
       setTitle(_collection.title)
       setDesc(_collection?.desc)
-      setSelectedImage({ localUri: _collection.thumbnailLocalUri})
+      _collection.thumbnailLocalUri && setSelectedImage({ localUri: _collection.thumbnailLocalUri})
     }
   }, [])
 
