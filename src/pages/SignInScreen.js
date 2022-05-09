@@ -18,8 +18,15 @@ const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  // Helper states
+  // Helper states and variables
   const [isLoading, setIsLoading] = useState(false)
+
+  // Error codes and messages
+  const errorMessages = {
+    'auth/user-not-found': 'Usuário não encontrado',
+    'auth/wrong-password': 'Senha incorreta',
+    'auth/invalid-email': 'Email mal formatado',
+  }
 
   const handleSubmit = () => {
     setIsLoading(true)
@@ -31,13 +38,14 @@ const SignInScreen = ({ navigation }) => {
       })
       .catch(error => {
         const errorCode = error.code
-        const errorMessage = error.message
-        alert('Usuário ou senha incorreto!')
+        // const errorMessage = error.message
+        alert(getMessageByErrorCode(errorCode))
       })
-      .finally(() => {
-        setIsLoading(false)
-      })
+
+    setIsLoading(false)
   }
+
+  const getMessageByErrorCode = (code) => errorMessages[code] || 'Error desconhecido'
 
   return (
     <SafeAreaView style={styles.bodyContainer}>
