@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { Alert, View, StyleSheet } from 'react-native'
 
 import { globalStyles } from '../../styles/global'
 
@@ -20,7 +20,15 @@ const MyCollectionsScreen = ({ navigation }) => {
   }
 
   const handlePressDelete = (collectionId) => {
-    deleteCollection(collectionId)
+    Alert.alert(
+      'Apagar coleção',
+      'Tem certeza que gostaria de apagar esta coleção?',
+      [
+        { text: 'Cancelar', },
+        { text: 'Apagar', onPress: () => deleteCollection(collectionId) }
+      ],
+      { cancelable: true, },
+    )
   }
 
   return (

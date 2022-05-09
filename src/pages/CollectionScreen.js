@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react'
 
-import { View, FlatList, StyleSheet } from 'react-native'
+import { Alert, View, FlatList, StyleSheet } from 'react-native'
 
 import { globalStyles } from '../../styles/global'
 
@@ -55,7 +55,15 @@ const CollectionScreen = ({ navigation, route }) => {
   }
 
   const handlePressDelete = (key) => {
-    deleteCard(collectionKey, key)
+    Alert.alert(
+      'Apagar cartão',
+      'Tem certeza que gostaria de apagar este cartão?',
+      [
+        { text: 'Cancelar', },
+        { text: 'Apagar', onPress: () => deleteCard(collectionKey, key) }
+      ],
+      { cancelable: true, },
+    )
   }
 
   const renderItemCard = ({ item }) => (
