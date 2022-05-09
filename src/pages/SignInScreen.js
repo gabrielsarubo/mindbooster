@@ -5,7 +5,7 @@ import 'firebase/auth'
 
 import { useState } from 'react'
 
-import { ActivityIndicator, Image, Text, View, StyleSheet } from 'react-native'
+import { Alert, ActivityIndicator, Image, Text, View, StyleSheet } from 'react-native'
 
 // Custom Components
 import CustomTextInput from '../components/CustomTextInput'
@@ -35,14 +35,19 @@ const SignInScreen = ({ navigation }) => {
       .then(userCredential => {
         // Signed in
         const user = userCredential.user
+        console.log(user)
       })
       .catch(error => {
-        const errorCode = error.code
-        // const errorMessage = error.message
-        alert(getMessageByErrorCode(errorCode))
+        Alert.alert(
+          getMessageByErrorCode(error.code),
+          'Confira suas informações',
+          [{ text: 'OK', onPress: () => console.log('Back Pressed') }],
+          { cancelable: true, },
+        )
       })
-
-    setIsLoading(false)
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   const getMessageByErrorCode = (code) => errorMessages[code] || 'Error desconhecido'
@@ -74,7 +79,7 @@ const SignInScreen = ({ navigation }) => {
           </Text>
         </View>
         {isLoading
-          ? <ActivityIndicator color='#fff' />
+          ? <ActivityIndicator color='#fff' size={24} />
           : (
             <CustomButton
               title='Entrar'
