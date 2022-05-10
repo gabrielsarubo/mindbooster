@@ -1,9 +1,11 @@
-import { ActivityIndicator, Text, View, StyleSheet } from 'react-native'
+import { ActivityIndicator, Text, View } from 'react-native'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 
 import CustomTextInput from './CustomTextInput'
 import CustomButton from './CustomButton'
+
+import { globalStyles } from '../../styles/global'
 
 const SignInSchema = yup.object({
   email: yup.string()
@@ -26,7 +28,7 @@ const SignInForm = ({ isLoading, handleSignIn }) => {
     >
       {(props) => (
         <>
-          <View style={styles.inputWrapper}>
+          <View style={globalStyles.inputWrapper}>
             <CustomTextInput
               value={props.values.email}
               onChangeText={props.handleChange('email')}
@@ -38,7 +40,7 @@ const SignInForm = ({ isLoading, handleSignIn }) => {
               placeholder='Senha'
               secureTextEntry
             />
-            <Text style={styles.forgotPassword}>
+            <Text style={globalStyles.forgotPassword}>
               Esqueci a senha
             </Text>
           </View>
@@ -53,22 +55,20 @@ const SignInForm = ({ isLoading, handleSignIn }) => {
                 />
               )
           }
+          {
+            ((props.touched.email && props.errors.email) || (props.touched.password && props.errors.password))
+            && (
+              <View style={globalStyles.errorContainer}>
+                <Text style={globalStyles.errorText}>
+                  {props.errors.email && 'Email não é válido\n'}
+                  {props.errors.password && 'Senha não é válida\n'}
+                </Text>
+              </View>
+            )}
         </>
       )}
     </Formik>
   )
 }
-
-const styles = StyleSheet.create({
-  inputWrapper: {
-    marginBottom: 16,
-  },
-
-  forgotPassword: {
-    textAlign: 'right',
-    color: '#dcdcdc',
-    marginTop: -4,
-  },
-})
 
 export default SignInForm
