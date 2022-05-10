@@ -4,21 +4,16 @@ import firebase from '../config/firebase'
 import 'firebase/auth'
 
 import { useState } from 'react'
-
-import { Alert, ActivityIndicator, Image, Text, View, StyleSheet } from 'react-native'
+import { Alert, Image, View, StyleSheet } from 'react-native'
 
 // Custom Components
-import CustomTextInput from '../components/CustomTextInput'
+import SignInForm from '../components/SignInForm'
 import CustomButton from '../components/CustomButton'
 
 import Logo from '../../assets/logo-mindbooster-90x90.png'
 import Logotype from '../../assets/logotype-mindbooster.png'
 
 const SignInScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-  // Helper states and variables
   const [isLoading, setIsLoading] = useState(false)
 
   // Error codes and messages
@@ -28,7 +23,9 @@ const SignInScreen = ({ navigation }) => {
     'auth/invalid-email': 'Email mal formatado',
   }
 
-  const handleSubmit = () => {
+  const handleSignIn = (values) => {
+    const { email, password } = values
+
     setIsLoading(true)
 
     firebase.auth().signInWithEmailAndPassword(email, password)
@@ -62,32 +59,10 @@ const SignInScreen = ({ navigation }) => {
 
       {/* // ! Form Container */}
       <View style={styles.formContainer}>
-        <View style={styles.inputWrapper}>
-          <CustomTextInput
-            value={email}
-            onChangeText={setEmail}
-            placeholder='Email'
-          />
-          <CustomTextInput
-            value={password}
-            onChangeText={setPassword}
-            placeholder='Senha'
-            secureTextEntry
-          />
-          <Text style={styles.forgotPassword}>
-            Esqueci a senha
-          </Text>
-        </View>
-        {isLoading
-          ? <ActivityIndicator color='#fff' size={24} />
-          : (
-            <CustomButton
-              title='Entrar'
-              onPress={handleSubmit}
-              type='primary'
-            />
-          )
-        }
+        <SignInForm
+          isLoading={isLoading}
+          handleSignIn={handleSignIn}
+        />
       </View>
 
       {/* // ! Bottom container */}
@@ -125,16 +100,6 @@ const styles = StyleSheet.create({
 
   formContainer: {
     marginTop: '-20%',
-  },
-
-  inputWrapper: {
-    marginBottom: 16,
-  },
-
-  forgotPassword: {
-    textAlign: 'right',
-    color: '#dcdcdc',
-    marginTop: -4,
   },
 
   bottomContainer: {
