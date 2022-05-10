@@ -1,6 +1,10 @@
+import { View } from 'react-native'
+
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer'
 
 import MyCollectionsStack from './MyCollectionsStack'
+
+import DrawerItemProfile from '../src/components/DrawerItemProfile'
 
 // Icons
 import { MaterialIcons } from '@expo/vector-icons'
@@ -11,6 +15,14 @@ export default function Drawer() {
   return (
     <RootDrawerNavigator.Navigator
       drawerContent={props => <CustomDrawerContent {...props} />}
+      screenOptions={{
+        drawerActiveBackgroundColor: '#3B3751',
+        drawerActiveTintColor: '#fff',
+        drawerInactiveTintColor: '#fff',
+        drawerLabelStyle: {
+          marginLeft: -20,
+        },
+      }}
     >
       <RootDrawerNavigator.Screen
         name='Home'
@@ -27,13 +39,17 @@ export default function Drawer() {
 
 const CustomDrawerContent = (props) => {
   return (
-    <DrawerContentScrollView {...props} >
-      <DrawerItemList {...props} />
-      <DrawerItem 
-        label='Sair'
-        onPress={() => console.log('Singing out...')}
-        icon={props => <MaterialIcons name='logout' size={props.size} color={props.color} />}
-      />
-    </DrawerContentScrollView>
+    <View style={{ flex: 1, backgroundColor: '#25213E' }}>
+      <DrawerContentScrollView {...props}>
+        <DrawerItemProfile {...props} />
+        <DrawerItemList {...props} />
+        <DrawerItem
+          label='Sair'
+          onPress={() => console.log('Singing out...')}
+          icon={props => <MaterialIcons name='logout' size={props.size} color='#fff' />}
+          labelStyle={{ color: '#fff', marginLeft: -20, }}
+        />
+      </DrawerContentScrollView>
+    </View>
   )
 }
