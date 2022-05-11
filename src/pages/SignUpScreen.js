@@ -5,24 +5,22 @@ import 'firebase/auth'
 
 import { useState } from 'react'
 
-import { Alert, ActivityIndicator, Image, Text, View, StyleSheet } from 'react-native'
+import { Alert, Image, Text, View, StyleSheet } from 'react-native'
 
 // Custom Components
-import CustomTextInput from '../components/CustomTextInput'
+import SignUpForm from '../components/SignUpForm'
 import CustomButton from '../components/CustomButton'
 
 import Logo from '../../assets/logo-mindbooster-90x90.png'
 import Logotype from '../../assets/logotype-mindbooster.png'
 
 const SignUpScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('')
-
   // Helper states and variables
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = () => {
+  const handleSubmit = (values) => {
+    const { email, password } = values
+    
     setIsLoading(true)
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -60,33 +58,11 @@ const SignUpScreen = ({ navigation }) => {
         <Text style={styles.h2}>
           Preencha os dados do seu cadastro
         </Text>
-        <View style={styles.inputWrapper}>
-          <CustomTextInput
-            value={email}
-            onChangeText={setEmail}
-            placeholder='Email'
-          />
-          <CustomTextInput
-            value={password}
-            onChangeText={setPassword}
-            placeholder='Senha'
-            secureTextEntry
-          />
-          <CustomTextInput
-            value={passwordConfirm}
-            onChangeText={setPasswordConfirm}
-            placeholder='Confirmar senha'
-            secureTextEntry
-          />
-        </View>
-        {isLoading
-          ? <ActivityIndicator color='#fff' size={24} />
-          : <CustomButton
-            title='Cadastrar'
-            onPress={handleSubmit}
-            type='primary'
-          />
-        }
+        
+        <SignUpForm
+          isLoading={isLoading}
+          handleSignUp={handleSubmit}
+        />
       </View>
 
       {/* // ! Bottom container */}
@@ -134,10 +110,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     marginBottom: 48,
-  },
-
-  inputWrapper: {
-    marginBottom: 16,
   },
 
   bottomContainer: {
