@@ -9,11 +9,10 @@ import { globalStyles } from '../../styles/global'
 
 const SignInSchema = yup.object({
   email: yup.string()
-    .required()
-    .email(),
+    .email('Email não é válido')
+    .required('O email é obrigatório'),
   password: yup.string()
-    .required()
-    .min(8),
+    .required('A senha é obrigatória'),
 })
 
 const SignInForm = ({ isLoading, handleSignIn }) => {
@@ -59,10 +58,8 @@ const SignInForm = ({ isLoading, handleSignIn }) => {
             ((props.touched.email && props.errors.email) || (props.touched.password && props.errors.password))
             && (
               <View style={globalStyles.errorContainer}>
-                <Text style={globalStyles.errorText}>
-                  {props.errors.email && 'Email não é válido\n'}
-                  {props.errors.password && 'Senha não é válida\n'}
-                </Text>
+                <Text style={globalStyles.errorText}>{props.errors.email}</Text>
+                <Text style={globalStyles.errorText}>{props.errors.password}</Text>
               </View>
             )}
         </>
