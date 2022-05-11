@@ -21,11 +21,9 @@ const CollectionContextProvider = (props) => {
   }
 
   const createCollection = (newCollection) => {
-    const _collections = [...collections]
-
-    _collections.push(newCollection)
-
-    setCollections(_collections)
+    setCollections((currentCollections) => {
+      return [newCollection, ...currentCollections]
+    })
   }
 
   const deleteCollection = (collectionId) => {
