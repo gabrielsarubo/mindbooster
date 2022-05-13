@@ -79,11 +79,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     backgroundColor: '#454161',
-    color: '#fdfdfd',
   },
 
   logoContainer: {
-    marginTop: '20%',
+    marginTop: 32,
     alignItems: 'center',
   },
 
@@ -99,7 +98,6 @@ const styles = StyleSheet.create({
   },
 
   formContainer: {
-    marginTop: '-20%',
   },
 
   bottomContainer: {
