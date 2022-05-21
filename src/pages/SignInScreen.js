@@ -5,6 +5,10 @@ import 'firebase/auth'
 
 import { useState } from 'react'
 import { Alert, Image, View, StyleSheet } from 'react-native'
+import { useSelector, useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+// Action creators
+import * as actionCreators from '../state/actions'
 
 // Custom Components
 import SignInForm from '../components/SignInForm'
@@ -14,6 +18,11 @@ import Logo from '../../assets/logo-mindbooster-90x90.png'
 import Logotype from '../../assets/logotype-mindbooster.png'
 
 const SignInScreen = ({ navigation }) => {
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
+
+  const { logUserIn } = bindActionCreators(actionCreators, dispatch)
+
   const [isLoading, setIsLoading] = useState(false)
 
   // Error codes and messages
@@ -30,9 +39,8 @@ const SignInScreen = ({ navigation }) => {
 
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(userCredential => {
-        // Signed in
         const user = userCredential.user
-        console.log(user)
+        logUserIn(user)
       })
       .catch(error => {
         Alert.alert(
