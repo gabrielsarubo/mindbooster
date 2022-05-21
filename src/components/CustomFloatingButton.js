@@ -2,7 +2,7 @@ import { TouchableOpacity, StyleSheet } from 'react-native'
 
 import { MaterialIcons } from '@expo/vector-icons'
 
-import colors from '../../styles/colors'
+import colors from '../styles/colors'
 
 const CustomFloatingButton = ({ onPress }) => {
   return (

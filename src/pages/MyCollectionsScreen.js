@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { Alert, View, StyleSheet } from 'react-native'
 
-import { globalStyles } from '../../styles/global'
+import { globalStyles } from '../styles/global'
 
 import CollectionsList from '../components/CollectionsList'
 import CustomFloatingButton from '../components/CustomFloatingButton'

@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react'
 
 import { Alert, View, FlatList, StyleSheet } from 'react-native'
 
-import { globalStyles } from '../../styles/global'
+import { globalStyles } from '../styles/global'
 
 import CustomTextInput from '../components/CustomTextInput'
 import CustomButton from '../components/CustomButton'

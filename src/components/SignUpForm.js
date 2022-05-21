@@ -5,7 +5,7 @@ import * as yup from 'yup'
 import CustomTextInput from './CustomTextInput'
 import CustomButton from './CustomButton'
 
-import { globalStyles } from '../../styles/global'
+import { globalStyles } from '../styles/global'
 
 const SignUpSchema = yup.object({
   email: yup.string()

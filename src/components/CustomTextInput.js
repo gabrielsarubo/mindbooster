@@ -1,6 +1,6 @@
 import { TextInput, StyleSheet } from 'react-native'
 
-import colors from '../../styles/colors'
+import colors from '../styles/colors'
 
 const CustomTextInput = ({
   value, onChangeText, placeholder, secureTextEntry,
