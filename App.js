@@ -6,8 +6,8 @@ import { StatusBar } from 'expo-status-bar'
 import { NavigationContainer } from '@react-navigation/native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-import MainNavigator from './routes/Drawer'
-import AuthNavigator from './routes/AuthStack'
+import MainNavigator from './src/routes/Drawer'
+import AuthNavigator from './src/routes/AuthStack'
 
 import CollectionContextProvider from './src/contexts/CollectionContext'
 
