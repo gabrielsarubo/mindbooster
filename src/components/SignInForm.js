@@ -22,7 +22,7 @@ const SignInForm = ({ isLoading, handleSignIn }) => {
       validationSchema={SignInSchema}
       onSubmit={(values, actions) => {
         handleSignIn(values)
-        actions.resetForm()
+        // actions.resetForm()
       }}
     >
       {(props) => (
@@ -32,12 +32,15 @@ const SignInForm = ({ isLoading, handleSignIn }) => {
               value={props.values.email}
               onChangeText={props.handleChange('email')}
               placeholder='Email'
+              keyboardType='email-address'
+              autoCapitalize='none'
             />
             <CustomTextInput
               value={props.values.password}
               onChangeText={props.handleChange('password')}
               placeholder='Senha'
               secureTextEntry
+              autoCapitalize='none'
             />
             <Text style={globalStyles.forgotPassword}>
               Esqueci a senha

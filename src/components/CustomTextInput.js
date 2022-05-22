@@ -4,7 +4,8 @@ import colors from '../styles/colors'
 
 const CustomTextInput = ({
   value, onChangeText, placeholder, secureTextEntry,
-  multiline, numberOfLines
+  multiline, numberOfLines, keyboardType = 'default',
+  autoCapitalize = 'sentences'
 }) => {
   return (
     <TextInput
@@ -15,6 +16,8 @@ const CustomTextInput = ({
       multiline={multiline}
       numberOfLines={numberOfLines}
       textAlignVertical='top'
+      keyboardType={keyboardType}
+      autoCapitalize={autoCapitalize}
       style={styles.container}
     />
   )
