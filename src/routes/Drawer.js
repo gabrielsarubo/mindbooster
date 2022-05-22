@@ -6,6 +6,10 @@ import MyCollectionsStack from './MyCollectionsStack'
 
 import DrawerItemProfile from '../components/DrawerItemProfile'
 
+import { bindActionCreators } from "redux";
+import * as actionCreators from "../state/actions";
+import { useDispatch } from "react-redux";
+
 // Icons
 import { MaterialIcons } from '@expo/vector-icons'
 
@@ -38,6 +42,9 @@ export default function Drawer() {
 }
 
 const CustomDrawerContent = (props) => {
+  const dispatch = useDispatch()
+  const { logUserOut } = bindActionCreators(actionCreators, dispatch)
+
   return (
     <View style={{ flex: 1, backgroundColor: '#25213E' }}>
       <DrawerContentScrollView {...props}>
@@ -45,7 +52,7 @@ const CustomDrawerContent = (props) => {
         <DrawerItemList {...props} />
         <DrawerItem
           label='Sair'
-          onPress={() => console.log('Singing out...')}
+          onPress={() => logUserOut()}
           icon={props => <MaterialIcons name='logout' size={props.size} color='#fff' />}
           labelStyle={{ color: '#fff', marginLeft: -20, }}
         />
