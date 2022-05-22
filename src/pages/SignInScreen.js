@@ -5,7 +5,7 @@ import { Alert, Image, View, StyleSheet } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 // Action creators
-import * as actionCreators from '../state/actions'
+import * as actionCreators from '../store/actions'
 
 // Custom Components
 import SignInForm from '../components/SignInForm'

@@ -7,7 +7,7 @@ import MyCollectionsStack from './MyCollectionsStack'
 import DrawerItemProfile from '../components/DrawerItemProfile'
 
 import { bindActionCreators } from "redux";
-import * as actionCreators from "../state/actions";
+import * as actionCreators from "../store/actions";
 import { useDispatch } from "react-redux";
 
 // Icons
