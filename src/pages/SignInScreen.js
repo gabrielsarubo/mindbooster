@@ -40,7 +40,10 @@ const SignInScreen = ({ navigation }) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(userCredential => {
         const user = userCredential.user
-        logUserIn(user)
+        logUserIn({
+          email: user.email,
+          username: user.displayName,
+        })
       })
       .catch(error => {
         Alert.alert(
