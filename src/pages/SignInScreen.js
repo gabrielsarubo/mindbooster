@@ -1,8 +1,5 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import firebase from '../config/firebase'
-import 'firebase/auth'
-
 import { useState } from 'react'
 import { Alert, Image, View, StyleSheet } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
@@ -35,14 +32,15 @@ const SignInScreen = ({ navigation }) => {
   }
 
   const handleSignIn = (values) => {
+    // Get values from form fields
     const { email, password } = values
 
     setIsLoading(true)
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(userCredential => {
-        // const user = userCredential.user
-        logUserIn()
+    // Capture and handle any error when trying to sign in
+    logUserIn(email, password)
+      .then(() => {
+        console.log('Log in successful')
       })
       .catch(error => {
         Alert.alert(

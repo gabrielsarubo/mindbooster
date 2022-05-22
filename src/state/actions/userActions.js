@@ -1,10 +1,23 @@
-export const logUserIn = () => {
+import firebase from '../../config/firebase'
+import 'firebase/auth'
+
+export const logUserIn = (email, password) => {
   return (dispatch) => {
-    dispatch({
-      type: 'LOG_USER_IN',
-      payload: {
-        userToken: 'dummy-auth-token',
-      }
+    return new Promise((resolve, reject) => {
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(userCredential => {
+          // ! If succeeds, dispatch an action of type LOG_USER_IN
+          dispatch({
+            type: 'LOG_USER_IN',
+            payload: {
+              userToken: 'dummy-auth-token',
+            }
+          })
+          resolve()
+        })
+        .catch(error => {
+          reject(error)
+        })
     })
   }
 }
