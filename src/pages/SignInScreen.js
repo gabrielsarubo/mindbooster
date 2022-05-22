@@ -18,7 +18,9 @@ import Logo from '../../assets/logo-mindbooster-90x90.png'
 import Logotype from '../../assets/logotype-mindbooster.png'
 
 const SignInScreen = ({ navigation }) => {
-  const user = useSelector(state => state.user)
+  // Removing the line below creates a memory leak warning
+  useSelector(state => state.user)
+
   const dispatch = useDispatch()
 
   const { logUserIn } = bindActionCreators(actionCreators, dispatch)
@@ -39,11 +41,8 @@ const SignInScreen = ({ navigation }) => {
 
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(userCredential => {
-        const user = userCredential.user
-        logUserIn({
-          email: user.email,
-          username: user.displayName,
-        })
+        // const user = userCredential.user
+        logUserIn()
       })
       .catch(error => {
         Alert.alert(

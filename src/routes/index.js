@@ -5,14 +5,14 @@ import MainNavigator from './Drawer'
 import AuthNavigator from './AuthStack'
 
 const AppRoute = () => {
-  const isSignedIn = useSelector(state => state.user.isSignedIn)
+  const userToken = useSelector(state => state.user.userToken)
 
   return (
     <NavigationContainer>
       {
-        isSignedIn
-          ? <MainNavigator />
-          : <AuthNavigator />
+        userToken == null
+          ? <AuthNavigator />
+          : <MainNavigator />
       }
     </NavigationContainer>
   )

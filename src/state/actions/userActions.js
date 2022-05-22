@@ -1,11 +1,9 @@
-export const logUserIn = user => {
+export const logUserIn = () => {
   return (dispatch) => {
     dispatch({
       type: 'LOG_USER_IN',
       payload: {
-        isSignedIn: true,
-        email: user.email,
-        username: user.displayName,
+        userToken: 'dummy-auth-token',
       }
     })
   }

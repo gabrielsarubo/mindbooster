@@ -1,7 +1,5 @@
 const initialState = {
-  isSignedIn: false,
-  email: null,
-  username: null,
+  userToken: null,
 }
 
 const userReducer = (state = initialState, action) => {
@@ -9,17 +7,13 @@ const userReducer = (state = initialState, action) => {
     case 'LOG_USER_IN':
       return {
         ...state,
-        isSignedIn: action.payload.isSignedIn,
-        email: action.payload.email,
-        username: action.payload.username,
+        userToken: action.payload.userToken,
       }
 
     case 'LOG_USER_OUT':
       return {
         ...state,
-        isSignedIn: false,
-        email: null,
-        username: null,
+        userToken: null,
       }
 
     default:
