@@ -1,7 +1,10 @@
+import firebase from "../../config/firebase"
+
 export const createCollection = (collection) => {
-  return (dispatch, getStore, { getFirebase, getFirestore }) => {
+  return (dispatch) => {
+    // Reference the Firestore database
+    const firestore = firebase.firestore()
     // Make async call
-    const firestore = getFirestore()
     firestore.collection('collections').add({
       ...collection,
       userId: 'dummy-user-id'
