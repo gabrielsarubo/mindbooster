@@ -1,5 +1,7 @@
 // Import the functions you need from the SDKs you need
 import firebase from "firebase/app";
+import 'firebase/firestore'
+import 'firebase/auth'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {

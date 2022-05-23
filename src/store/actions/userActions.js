@@ -1,5 +1,4 @@
 import firebase from '../../config/firebase'
-import 'firebase/auth'
 
 export const logUserIn = (email, password) => {
   return (dispatch) => {
