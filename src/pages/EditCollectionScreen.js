@@ -7,9 +7,18 @@ import CustomTextInput from '../components/CustomTextInput'
 import CustomImageInput from '../components/CustomImageInput'
 
 import { CollectionContext } from '../contexts/CollectionContext'
+// Redux
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actionCreators from '../store/actions'
 
 const EditCollectionScreen = ({ route, navigation }) => {
-  const { collections, createCollection, editCollectionMetadata } = useContext(CollectionContext)
+  // Redux Dispatchers
+  const dispatch = useDispatch()
+  const { createCollection } = bindActionCreators(actionCreators, dispatch)
+
+  // DEPRECATED const { collections, createCollection, editCollectionMetadata } = useContext(CollectionContext)
+  const { collections, editCollectionMetadata } = useContext(CollectionContext)
 
   const [action, setAction] = useState()
   const [collectionId, setCollectionId] = useState()
@@ -61,13 +70,14 @@ const EditCollectionScreen = ({ route, navigation }) => {
 
   const handlePressCreate = () => {
     const newCollection = {
-      key: Math.random() * 10,
+      // DEPRECATED key: Math.random() * 10,
       title: title,
       desc: desc,
-      thumbnailLocalUri: selectedImage.localUri,
-      cardsList: [],
+      // DEPRECATED thumbnailLocalUri: selectedImage.localUri,
+      // DEPRECATED cardsList: [],
     }
 
+    // DEPRECATED createCollection(newCollection)
     createCollection(newCollection)
     
     navigation.goBack()
