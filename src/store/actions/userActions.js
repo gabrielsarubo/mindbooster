@@ -5,14 +5,23 @@ export const logUserIn = (email, password) => {
     return new Promise((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(email, password)
         .then(userCredential => {
-          // ! If succeeds, dispatch an action of type LOG_USER_IN
-          dispatch({
-            type: 'LOG_USER_IN',
-            payload: {
-              userToken: 'dummy-auth-token',
-            }
-          })
-          resolve()
+          const { user } = userCredential
+          // Get a JSON Web Token (JWT) used to identify the user to a Firebase service
+          user.getIdToken()
+            .then(token => {
+              // ! If succeeds, dispatch an action of type LOG_USER_IN
+              dispatch({
+                type: 'LOG_USER_IN',
+                payload: {
+                  userToken: token,
+                  uid: user.uid
+                }
+              })
+              resolve()
+            })
+            .catch(error => {
+              reject(error)
+            })
         })
         .catch(error => {
           reject(error)
