@@ -1,7 +1,5 @@
 const initialState = {
-  collections: [
-    { title: 'Sample Collection', desc: 'A brief description of the collection' }
-  ]
+  collections: []
 }
 
 const collectionReducer = (state = initialState, action) => {
@@ -13,6 +11,12 @@ const collectionReducer = (state = initialState, action) => {
     case 'CREATE_COLLECTION_ERROR':
       console.log(action.error)
       return state
+
+    case 'SET_COLLECTIONS':
+      return {
+        ...state,
+        collections: action.collections,
+      }
 
     default:
       return state
