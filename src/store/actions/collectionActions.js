@@ -17,6 +17,7 @@ export const createCollection = (collection, {uri, filename}) => {
           userId: user.uid,
           createAt: new Date(),
           thumbnail: filename,
+          cardsList: [],
         })
           .then(res => {
             // res corresponds to the newly created doc in Firestore
