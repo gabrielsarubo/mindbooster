@@ -18,7 +18,10 @@ export const createCollection = (collection, {uri, filename}) => {
           createAt: new Date(),
           thumbnail: filename,
         })
-          .then(() => {
+          .then(res => {
+            // res corresponds to the newly created doc in Firestore
+            // get res.id and store in the new collection Object
+            collection.id = res.id
             dispatch({
               type: 'CREATE_COLLECTION',
               collection
@@ -54,7 +57,13 @@ export const watchCollections = () => {
       .onSnapshot(querySnapshot => {
         const collections = []
         querySnapshot.forEach(doc => {
-          collections.push(doc.data())
+          // doc.data() returns an Object containing all fields in the document
+          const docData = doc.data()
+          const collection = {
+            id: doc.id,
+            ...docData
+          }
+          collections.push(collection)
         })
         dispatch({
           type: 'SET_COLLECTIONS',

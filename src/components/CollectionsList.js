@@ -18,6 +18,7 @@ const CollectionsList = ({ data, onPressHandler, onPressEdit, onPressDelete }) =
       <FlatList
         data={data}
         renderItem={renderListItem}
+        keyExtractor={item => item.id}
         style={styles.flat_list}
       />
     </View>

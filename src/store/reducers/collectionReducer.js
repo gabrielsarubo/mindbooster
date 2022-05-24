@@ -5,7 +5,6 @@ const initialState = {
 const collectionReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'CREATE_COLLECTION':
-      console.log(action.collection)
       return state
 
     case 'CREATE_COLLECTION_ERROR':
