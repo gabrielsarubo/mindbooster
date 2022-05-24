@@ -6,7 +6,7 @@ import ThumbnailPlaceholder from '../../assets/placeholder-thumbnail.png'
 
 const CollectionListItem = ({ collection, onPressHandler, onPressEdit, onPressDelete }) => {
   return (
-    <TouchableOpacity onPress={() => onPressHandler(collection)}>
+    <TouchableOpacity onPress={() => onPressHandler(collection.id, collection.title)}>
       <View style={styles.collection_list_item}>
         <View style={styles.wrapper_image_title}>
           <View style={styles.wrapper_image}>

@@ -50,9 +50,10 @@ const MyCollectionsScreen = ({ navigation }) => {
     <View style={styles.container}>
       <CollectionsList
         data={collections}
-        onPressHandler={(collection) => {
+        onPressHandler={(collectionId, collectionTitle) => {
           navigation.navigate('Collection', {
-            collection: collection
+            collectionId,
+            collectionTitle
           })
         }}
         onPressEdit={handlePressEdit}

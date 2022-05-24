@@ -34,7 +34,7 @@ export default function MyCollectionsStack() {
       <Stack.Screen
         name='Collection'
         component={CollectionScreen}
-        options={({ route }) => ({ title: route.params?.collection.title })}
+        options={({ route }) => ({ title: route.params?.collectionTitle })}
       />
       <Stack.Screen
         name='Play'
