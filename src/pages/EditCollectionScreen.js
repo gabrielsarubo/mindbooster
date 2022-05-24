@@ -70,15 +70,22 @@ const EditCollectionScreen = ({ route, navigation }) => {
 
   const handlePressCreate = () => {
     const newCollection = {
-      // DEPRECATED key: Math.random() * 10,
       title: title,
       desc: desc,
-      // DEPRECATED thumbnailLocalUri: selectedImage.localUri,
-      // DEPRECATED cardsList: [],
     }
 
-    // DEPRECATED createCollection(newCollection)
-    createCollection(newCollection)
+    /**
+     * Example of localUri: 'data:image/png;base64,iVBORw0KGgoAAACBt/w/ls2PLhOph2QAAAA...'
+     * uri = 'iVBORw0KGgoAAACBt/w/ls2PLhOph2QAAAA...'
+     * 
+     * TODO: change how the filename is retrieved
+     * filename = 'colors.png' which is the title of the collections without whitespaces,
+     * lowercased and with a PNG extension hardcoded
+     */
+    const uri = selectedImage.localUri
+    const filename = `thumbnail_${title.trim().replace(' ', '').toLowerCase()}.png`
+
+    createCollection(newCollection, {uri, filename})
     
     navigation.goBack()
   }
