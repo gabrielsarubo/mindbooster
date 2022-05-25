@@ -25,7 +25,7 @@ const SignUpForm = ({ isLoading, handleSignUp }) => {
       validationSchema={SignUpSchema}
       onSubmit={(values, actions) => {
         handleSignUp(values)
-        actions.resetForm()
+        // actions.resetForm()
       }}
     >
       {(props) => (
@@ -35,18 +35,22 @@ const SignUpForm = ({ isLoading, handleSignUp }) => {
               value={props.values.email}
               onChangeText={props.handleChange('email')}
               placeholder='Email'
+              keyboardType='email-address'
+              autoCapitalize='none'
             />
             <CustomTextInput
               value={props.values.password}
               onChangeText={props.handleChange('password')}
               placeholder='Senha'
               secureTextEntry
+              autoCapitalize='none'
             />
             <CustomTextInput
               value={props.values.passwordConfirm}
               onChangeText={props.handleChange('passwordConfirm')}
               placeholder='Confirmar senha'
               secureTextEntry
+              autoCapitalize='none'
             />
           </View>
           {
