@@ -1,9 +1,10 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import firebase from '../config/firebase'
-import 'firebase/auth'
-
 import { useState } from 'react'
+// Redux and actions
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actionCreators from '../store/actions'
 
 import { Alert, Image, Text, View, StyleSheet } from 'react-native'
 
@@ -15,6 +16,10 @@ import Logo from '../../assets/logo-mindbooster-90x90.png'
 import Logotype from '../../assets/logotype-mindbooster.png'
 
 const SignUpScreen = ({ navigation }) => {
+  // Redux action dispatchers
+  const dispatch = useDispatch()
+  const { signUp } = bindActionCreators(actionCreators, dispatch)
+  
   // Helper states and variables
   const [isLoading, setIsLoading] = useState(false)
 
@@ -23,24 +28,21 @@ const SignUpScreen = ({ navigation }) => {
     
     setIsLoading(true)
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(userCredential => {
-        const user = userCredential.user
-        console.log(user)
+    signUp(email,password)
+      .then(() => {
+        console.log('New user added!')
         Alert.alert(
           'Conta Criada',
           `Sua nova conta com o email ${email} foi criada com sucesso`,
           [{ text: 'Ir para tela inicial', onPress: () => console.log('Going to Home...'), }]
         )
       })
-      .catch(() => {
+      .catch(error => {
         Alert.alert(
           'Ops, algo deu errado',
-          'Confira suas informações',
+          error.message,
           [{ text: 'OK', onPress: () => console.log('OK Pressed'), }]
         )
-      })
-      .finally(() => {
         setIsLoading(false)
       })
   }
