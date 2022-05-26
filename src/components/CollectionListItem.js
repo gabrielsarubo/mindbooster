@@ -19,7 +19,7 @@ const CollectionListItem = ({ collection, onPressHandler, onPressEdit, onPressDe
         setUrl(url)
       })
       .catch(error => console.log(error))
-  }, [])
+  }, [collection])
 
   return (
     <TouchableOpacity onPress={() => onPressHandler(collection.id, collection.title)}>

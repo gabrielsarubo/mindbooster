@@ -44,6 +44,54 @@ export const createCollection = (collection, {uri, filename}) => {
   }
 }
 
+export const updateCollectionMetada = (collectionId, metadata, uri = null) => {
+  return (dispatch) => {
+    // Reference the Firestore database and Storage
+    const firestore = firebase.firestore()
+    const storage = firebase.storage()
+
+    const collectionRef = firestore.collection('collections').doc(collectionId)
+
+    // If user changed image, upload the new image to Storage
+    // and then update collection doc in Firestore
+    if (uri != null) {
+      const storageRef = storage.ref(`images/${uri.filename}`)
+      storageRef.putString(uri.uri, 'data_url', { contentType: 'image/png' })
+        .then(() => {
+          collectionRef.update({
+            ...metadata,
+            thumbnail: uri.filename,
+          })
+            .then(() => {
+              dispatch({
+                type: 'UPDATE_COLLECTION_METADATA',
+                metadata,
+              })
+            })
+            .catch((error) => {
+              console.error('Error updating document: ', error)
+            })
+        })
+        .catch((error) => {
+          console.error('Error updating thumbnail: ', error)
+        })
+    } else {
+      collectionRef.update({
+        ...metadata,
+      })
+        .then(() => {
+          dispatch({
+            type: 'UPDATE_COLLECTION_METADATA',
+            metadata,
+          })
+        })
+        .catch((error) => {
+          console.error('Error updating document: ', error)
+        })
+    }
+  }
+}
+
 export const watchCollections = () => {
   return (dispatch, getState) => {
     const { user } = getState()

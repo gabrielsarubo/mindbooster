@@ -11,6 +11,18 @@ const collectionReducer = (state = initialState, action) => {
       console.log(action.error)
       return state
 
+    case 'UPDATE_COLLECTION_METADATA':
+      const _collections = [...state.collections]
+
+      const indexOfCollection = _collections.findIndex(collection => collection.id === action.collectionId)
+
+      _collections[indexOfCollection] = {...action.metadata}
+
+      return {
+        ...state,
+        _collections,
+      }
+
     case 'SET_COLLECTIONS':
       return {
         ...state,

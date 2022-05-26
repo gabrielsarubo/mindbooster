@@ -16,10 +16,9 @@ const EditCollectionScreen = ({ route, navigation }) => {
   // Redux Dispatchers 
   const collections = useSelector(state => state.collection.collections)
   const dispatch = useDispatch()
-  const { createCollection } = bindActionCreators(actionCreators, dispatch)
+  const { createCollection, updateCollectionMetada } = bindActionCreators(actionCreators, dispatch)
 
   // DEPRECATED const { collections, createCollection, editCollectionMetadata } = useContext(CollectionContext)
-  const { editCollectionMetadata } = useContext(CollectionContext)
 
   const [action, setAction] = useState()
   const [collectionId, setCollectionId] = useState()
@@ -81,22 +80,28 @@ const EditCollectionScreen = ({ route, navigation }) => {
      * lowercased and with a PNG extension hardcoded
      */
     const uri = selectedImage.localUri
-    const filename = `thumbnail_${title.trim().replace(' ', '').toLowerCase()}.png`
+    const filename = `thumbnail_${title.trim().replace(' ', '').toLowerCase()}${new Date().toLocaleString().replace(/[^0-9]/g, '')}.png`
 
     createCollection(newCollection, {uri, filename})
     
     navigation.goBack()
   }
 
-  const handlePressUpdate = () => {
+  const handlePressUpdate = () => {    
     const newMetadata = {
       title: title,
       desc: desc,
-      thumbnailLocalUri: selectedImage.localUri,
     }
-    
-    editCollectionMetadata(collectionId, newMetadata)
-    
+
+    if (selectedImage?.localUri) {
+      const uri = selectedImage.localUri
+      const filename = `thumbnail_${title.trim().replace(' ', '').toLowerCase()}${new Date().toLocaleString().replace(/[^0-9]/g, '')}.png`
+
+      updateCollectionMetada(collectionId, newMetadata, {uri, filename})
+    } else {
+      updateCollectionMetada(collectionId, newMetadata)
+    }
+
     navigation.goBack()
   }
 
