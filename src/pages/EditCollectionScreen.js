@@ -8,30 +8,30 @@ import CustomImageInput from '../components/CustomImageInput'
 
 import { CollectionContext } from '../contexts/CollectionContext'
 // Redux
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actionCreators from '../store/actions'
 
 const EditCollectionScreen = ({ route, navigation }) => {
-  // Redux Dispatchers
+  // Redux Dispatchers 
+  const collections = useSelector(state => state.collection.collections)
   const dispatch = useDispatch()
   const { createCollection } = bindActionCreators(actionCreators, dispatch)
 
   // DEPRECATED const { collections, createCollection, editCollectionMetadata } = useContext(CollectionContext)
-  const { collections, editCollectionMetadata } = useContext(CollectionContext)
+  const { editCollectionMetadata } = useContext(CollectionContext)
 
   const [action, setAction] = useState()
   const [collectionId, setCollectionId] = useState()
-
-  const [collection, setCollection] = useState({})
 
   // state for the form inputs
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
   const [selectedImage, setSelectedImage] = useState(null)
+  const [imageUrl, setImageUrl] = useState()
 
   useEffect(() => {
-    const { action, collectionId } = route.params
+    const { action, collectionId, thumbnailUrl } = route.params
     
     setAction(action)
     setCollectionId(collectionId)
@@ -39,13 +39,11 @@ const EditCollectionScreen = ({ route, navigation }) => {
     // If user wants to edit a collection,
     // then recover collection data from CollectionContext and store it away in state
     if (action === 'edit') {
-      const _collection = collections.find(collection => collection.key === collectionId)
-
-      setCollection(_collection)
+      const _collection = collections.find(collection => collection.id === collectionId)
 
       setTitle(_collection.title)
       setDesc(_collection?.desc)
-      _collection.thumbnailLocalUri && setSelectedImage({ localUri: _collection.thumbnailLocalUri})
+      setImageUrl(thumbnailUrl)
     }
   }, [])
 
@@ -123,7 +121,7 @@ const EditCollectionScreen = ({ route, navigation }) => {
               numberOfLines={4}
             />
             <CustomImageInput
-              selectedImage={selectedImage}
+              selectedImage={selectedImage?.localUri || imageUrl}
               openImagePickerAsync={openImagePickerAsync}
             />
           </View>

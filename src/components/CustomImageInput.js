@@ -11,7 +11,7 @@ const CustomImageInput = ({ openImagePickerAsync, selectedImage }) => {
           {selectedImage !== null
             ? (
               <Image
-                source={{ uri: selectedImage.localUri }}
+                source={{ uri: selectedImage }}
                 style={styles.thumbnail}
               />
             )

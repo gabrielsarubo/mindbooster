@@ -27,10 +27,11 @@ const MyCollectionsScreen = ({ navigation }) => {
     watchCollections()
   }, [])
 
-  const handlePressEdit = (collectionId) => {
+  const handlePressEdit = ({collectionId, thumbnailUrl}) => {
     navigation.navigate('EditCollection', {
       action: 'edit',
-      collectionId: collectionId,
+      collectionId,
+      thumbnailUrl,
     })
   }
 
