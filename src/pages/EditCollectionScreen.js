@@ -1,3 +1,4 @@
+import { Platform } from 'expo-modules-core'
 import { useState, useEffect, useContext } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
@@ -82,6 +83,12 @@ const EditCollectionScreen = ({ route, navigation }) => {
     const uri = selectedImage.localUri
     const filename = `thumbnail_${title.trim().replace(' ', '').toLowerCase()}${new Date().toLocaleString().replace(/[^0-9]/g, '')}.png`
 
+    // TODO In case user is on Android, dont let them update a image
+    if (Platform.OS === 'android') {
+      alert('Nao e possivel criar ou atualizar uma colecao via Android ainda.')
+      return
+    }
+
     createCollection(newCollection, {uri, filename})
     
     navigation.goBack()
@@ -94,6 +101,12 @@ const EditCollectionScreen = ({ route, navigation }) => {
     }
 
     if (selectedImage?.localUri) {
+      // TODO In case user is on Android, dont let them update a image
+      if (Platform.OS === 'android') {
+        alert('Nao e possivel criar ou atualizar uma colecao via Android ainda.')
+        return
+      }
+      
       const uri = selectedImage.localUri
       const filename = `thumbnail_${title.trim().replace(' ', '').toLowerCase()}${new Date().toLocaleString().replace(/[^0-9]/g, '')}.png`
 
