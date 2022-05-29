@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Alert, View, StyleSheet } from 'react-native'
+import { Text, Alert, View, StyleSheet } from 'react-native'
 
 import { globalStyles } from '../styles/global'
 
@@ -54,17 +54,26 @@ const MyCollectionsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <CollectionsList
-        data={collections}
-        onPressHandler={(collectionId, collectionTitle) => {
-          navigation.navigate('Collection', {
-            collectionId,
-            collectionTitle
-          })
-        }}
-        onPressEdit={handlePressEdit}
-        onPressDelete={handlePressDelete}
-      />
+      {
+        collections.length > 0
+          ? (
+            <CollectionsList
+              data={collections}
+              onPressHandler={(collectionId, collectionTitle) => {
+                navigation.navigate('Collection', {
+                  collectionId,
+                  collectionTitle
+                })
+              }}
+              onPressEdit={handlePressEdit}
+              onPressDelete={handlePressDelete}
+            />
+          ) : (
+            <View style={globalStyles.infoMessageContainer}>
+              <Text style={globalStyles.infoMessage}>Não existe nenhuma coleção ainda.</Text>
+            </View>
+          )
+      }
 
       <View style={globalStyles.floatingButtonWrapper}>
         <CustomFloatingButton

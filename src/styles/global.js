@@ -32,4 +32,22 @@ export const globalStyles = StyleSheet.create({
     fontSize: 16,
     color: '#fff',
   },
+
+  // Container and message for when lists are empty
+  infoMessageContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 14,
+    paddingLeft: 14,
+  },
+
+  infoMessage: {
+    fontSize: 17,
+    lineHeight: 26,
+    textAlign: 'center',
+    color: 'rgba(255, 255, 255, 0.7)',
+    paddingTop: 16,
+    paddingBottom: 16,
+  },
 })

@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react'
 import { useSelector } from 'react-redux'
-import { Alert, View, FlatList, StyleSheet } from 'react-native'
+import { Text, Alert, View, FlatList, StyleSheet } from 'react-native'
 
 import { globalStyles } from '../styles/global'
 
@@ -100,13 +100,22 @@ const CollectionScreen = ({ navigation, route }) => {
         />
       </View>
 
-      <FlatList
-        data={filteredCards}
-        renderItem={renderItemCard}
-        keyExtractor={(item, index) => index}
-        style={styles.flatList}
-        showsVerticalScrollIndicator={false}
-      />
+      {
+        cards.length > 0
+          ? (
+            <FlatList
+              data={filteredCards}
+              renderItem={renderItemCard}
+              keyExtractor={(item, index) => index}
+              style={styles.flatList}
+              showsVerticalScrollIndicator={false}
+            />
+          ) : (
+            <View style={globalStyles.infoMessageContainer}>
+              <Text style={globalStyles.infoMessage}>Não existe nenhum flashcard ainda.</Text>
+            </View>
+          )
+      }
 
       <View style={globalStyles.floatingButtonWrapper}>
         <CustomFloatingButton
