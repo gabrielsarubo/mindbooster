@@ -3,6 +3,8 @@ const initialState = {
 }
 
 const collectionReducer = (state = initialState, action) => {
+  let _collections = []
+  
   switch (action.type) {
     case 'CREATE_COLLECTION':
       return state
@@ -12,7 +14,7 @@ const collectionReducer = (state = initialState, action) => {
       return state
 
     case 'UPDATE_COLLECTION_METADATA':
-      const _collections = [...state.collections]
+      _collections = [...state.collections]
 
       const indexOfCollection = _collections.findIndex(collection => collection.id === action.collectionId)
 
@@ -20,7 +22,15 @@ const collectionReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        _collections,
+        collections: _collections,
+      }
+
+    case 'DELETE_COLLECTION':
+      _collections = state.collections.filter(collection => collection.id !== action.collectionId)
+      
+      return {
+        ...state,
+        collections: _collections,
       }
 
     case 'SET_COLLECTIONS':

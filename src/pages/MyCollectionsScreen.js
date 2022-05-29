@@ -7,7 +7,6 @@ import { globalStyles } from '../styles/global'
 import CollectionsList from '../components/CollectionsList'
 import CustomFloatingButton from '../components/CustomFloatingButton'
 
-import { CollectionContext } from '../contexts/CollectionContext'
 // Redux
 import { bindActionCreators } from 'redux'
 import * as actionCreators from '../store/actions'
@@ -16,11 +15,7 @@ const MyCollectionsScreen = ({ navigation }) => {
   // Connect to the Redux store
   const collections = useSelector(state => state.collection.collections)
   const dispatch = useDispatch()
-  const { watchCollections } = bindActionCreators(actionCreators, dispatch)
-
-  // TODO should this be inside the useEffect hook?
-  const { deleteCollection } = useContext(CollectionContext)
-  // DEPRECATED const { collections, deleteCollection } = useContext(CollectionContext)
+  const { watchCollections, deleteCollection } = bindActionCreators(actionCreators, dispatch)
 
   useEffect(() => {
     // Listen to changes in the Redux store
@@ -41,7 +36,17 @@ const MyCollectionsScreen = ({ navigation }) => {
       'Tem certeza que gostaria de apagar esta coleção?',
       [
         { text: 'Cancelar', },
-        { text: 'Apagar', onPress: () => deleteCollection(collectionId) }
+        {
+          text: 'Apagar', onPress: () => {
+            deleteCollection(collectionId)
+              .then(() => {
+                console.log('Your collection was successfully deleted!')
+              })
+              .catch((error) => {
+                console.error('Error removing document: ', error)
+              })
+          }
+        }
       ],
       { cancelable: true, },
     )

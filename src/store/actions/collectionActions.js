@@ -92,6 +92,29 @@ export const updateCollectionMetada = (collectionId, metadata, uri = null) => {
   }
 }
 
+export const deleteCollection = (collectionId) => {
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      // Reference Firestore database
+      const firestore = firebase.firestore()
+      // Reference document
+      const collectionRef = firestore.collection('collections')
+      // Delete document
+      collectionRef.doc(collectionId).delete()
+        .then(() => {
+          dispatch({
+            type: 'DELETE_COLLECTION',
+            collectionId,
+          })
+          resolve()
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  }
+} 
+
 export const watchCollections = () => {
   return (dispatch, getState) => {
     const { user } = getState()
