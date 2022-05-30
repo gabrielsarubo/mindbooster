@@ -167,3 +167,35 @@ export const createCard = (collectionId, card) => (dispatch) => {
       console.error('Failed to add new flashcard: ', error)
     })
 }
+
+/**
+ * Update a flashcard from the list of flashcards inside a collection
+ * 
+ * This method updates the entire list of cards instead of updating
+ * only the one flashcard that needs to be updated
+ * TODO change this so it only updates one flashcard at a time
+ */
+export const editCard = (collectionId, card) => (dispatch, getState) => {
+  // Create a copy of cardsList
+  const { collection } = getState()
+  const _collections = [...collection.collections]
+
+  const indexOfCollection = _collections.findIndex(collection => collection.id === collectionId)
+  const indexOfCard = _collections[indexOfCollection].cardsList.findIndex(item => item.id === card.id)
+
+  _collections[indexOfCollection].cardsList[indexOfCard] = card
+  
+  const firestore = firebase.firestore()
+
+  const docRef = firestore.collection('collections').doc(collectionId)
+
+  docRef.update({
+    cardsList: _collections[indexOfCollection].cardsList
+  })
+    .then(() => {
+      console.log('Flashcard updated successfully!')
+    })
+    .catch(error => {
+      console.error('Failed to update flashcard: ', error)
+    })
+}
