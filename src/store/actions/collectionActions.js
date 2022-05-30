@@ -199,3 +199,24 @@ export const editCard = (collectionId, card) => (dispatch, getState) => {
       console.error('Failed to update flashcard: ', error)
     })
 }
+
+export const deleteCard = (collectionId, cardId) => (dispatch, getState) => {
+  // Create a copy of cardsList
+  const { collection } = getState()
+  
+  const indexOfCollection = collection.collections.findIndex(collection => collection.id === collectionId)
+
+  const newCardsList = collection.collections[indexOfCollection].cardsList.filter(card => card.id !== cardId)
+
+  const docRef = firebase.firestore().collection('collections').doc(collectionId)
+
+  docRef.update({
+    cardsList: newCardsList
+  })
+    .then(() => {
+      console.log('Flashcard deleted from cardsList Array successfully!')
+    })
+    .catch(error => {
+      console.error('Failed to delete flashcard from cardsList Array: ', error)
+    })
+}

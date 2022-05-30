@@ -1,5 +1,7 @@
-import { useEffect, useState, useContext } from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actionCreators from '../store/actions'
 import { Text, Alert, View, FlatList, StyleSheet } from 'react-native'
 
 import { globalStyles } from '../styles/global'
@@ -9,14 +11,11 @@ import CustomButton from '../components/CustomButton'
 import CustomFloatingButton from '../components/CustomFloatingButton'
 import CardListItem from '../components/CardListItem'
 
-import { CollectionContext } from '../contexts/CollectionContext'
-
 const CollectionScreen = ({ navigation, route }) => {
   // Redux store and actions
   const collections = useSelector(state => state.collection.collections)
-  
-  const { deleteCard } = useContext(CollectionContext)
-  // DEPRECATED const { collections, deleteCard } = useContext(CollectionContext)
+  const dispatch = useDispatch()
+  const { deleteCard } = bindActionCreators(actionCreators, dispatch)
 
   const [cards, setCards] = useState([])
   const [filteredCards, setFilteredCards] = useState([])
@@ -58,13 +57,13 @@ const CollectionScreen = ({ navigation, route }) => {
     })
   }
 
-  const handlePressDelete = (key) => {
+  const handlePressDelete = (cardId) => {
     Alert.alert(
       'Apagar cartão',
       'Tem certeza que gostaria de apagar este cartão?',
       [
         { text: 'Cancelar', },
-        { text: 'Apagar', onPress: () => deleteCard(collectionId, key) }
+        { text: 'Apagar', onPress: () => deleteCard(collectionId, cardId) }
       ],
       { cancelable: true, },
     )
