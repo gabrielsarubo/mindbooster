@@ -1,3 +1,4 @@
+import firebaseApp from "firebase/app"
 import firebase from "../../config/firebase"
 
 export const createCollection = (collection, {uri, filename}) => {
@@ -143,4 +144,26 @@ export const watchCollections = () => {
         })
       })
   }
+}
+
+/**
+ * Create a new flashcard inside a given collection
+ * 
+ */
+export const createCard = (collectionId, card) => (dispatch) => {
+  const firestore = firebase.firestore()
+
+  // Reference the doc in Firestore
+  const docRef = firestore.collection('collections').doc(collectionId)
+
+  // Make async call to Firebase Firestore
+  docRef.update({
+    cardsList: firebaseApp.firestore.FieldValue.arrayUnion(card)
+  })
+    .then(() => {
+      console.log('Flashcard added to the cards list inside the collection doc!')
+    })
+    .catch(error => {
+      console.error('Failed to add new flashcard: ', error)
+    })
 }

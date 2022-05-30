@@ -1,12 +1,20 @@
 import { useState, useEffect, useContext } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
+// Redux
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actionCreators from '../store/actions'
 
 import CustomButton from '../components/CustomButton'
 
 import { CollectionContext } from '../contexts/CollectionContext'
 
 const EditCardScreen = ({ route, navigation }) => {
-  const { collections, createCard, editCard } = useContext(CollectionContext)
+  const dispatch = useDispatch()
+  const { createCard } = bindActionCreators(actionCreators, dispatch)
+  
+  const { collections, editCard } = useContext(CollectionContext)
+  // const { collections, createCard, editCard } = useContext(CollectionContext)
   
   const [action, setAction] = useState()
   const [cardId, setCardId] = useState()
@@ -21,7 +29,6 @@ const EditCardScreen = ({ route, navigation }) => {
     const { action, cardId, collectionId } = route.params
 
     setAction(action)
-    setCardId(cardId)
     setCollectionId(collectionId)
 
     // If user wants to edit a card,
@@ -32,6 +39,7 @@ const EditCardScreen = ({ route, navigation }) => {
           .cardsList.find(card => card.key === cardId)
   
       setCard(_card)
+      setCardId(cardId)
 
       setFront(_card.front)
       setBack(_card.back)
@@ -41,12 +49,9 @@ const EditCardScreen = ({ route, navigation }) => {
   const handlePressCreate = () => {
     // TODO change the way the ID/key of the card is generated
     const _card = {
-      key: Math.random() * 10,
       front: front,
       back: back,
     }
-
-    setCard(_card)
 
     createCard(collectionId, _card)
 
