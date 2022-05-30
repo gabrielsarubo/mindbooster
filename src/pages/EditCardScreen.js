@@ -12,8 +12,9 @@ import { CollectionContext } from '../contexts/CollectionContext'
 const EditCardScreen = ({ route, navigation }) => {
   const dispatch = useDispatch()
   const { createCard } = bindActionCreators(actionCreators, dispatch)
+  const collections = useSelector(state => state.collection.collections)
   
-  const { collections, editCard } = useContext(CollectionContext)
+  const { editCard } = useContext(CollectionContext)
   // const { collections, createCard, editCard } = useContext(CollectionContext)
   
   const [action, setAction] = useState()
@@ -35,8 +36,8 @@ const EditCardScreen = ({ route, navigation }) => {
     // then recover card from CollectionContext and store it in state
     if (action === 'edit') {
       const _card =
-        collections.find(collection => collection.key === collectionId)
-          .cardsList.find(card => card.key === cardId)
+        collections.find(collection => collection.id === collectionId)
+          .cardsList.find(card => card.id === cardId)
   
       setCard(_card)
       setCardId(cardId)
@@ -47,8 +48,9 @@ const EditCardScreen = ({ route, navigation }) => {
   }, [])
 
   const handlePressCreate = () => {
-    // TODO change the way the ID/key of the card is generated
+    // TODO change the way the ID of the card is generated
     const _card = {
+      id: Math.random().toString(),
       front: front,
       back: back,
     }
