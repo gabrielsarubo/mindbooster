@@ -20,6 +20,7 @@ export default function MyCollectionsStack() {
         },
         headerTintColor: '#fff',
       }}
+      initialRouteName='MyCollections'
     >
       <Stack.Screen
         name='MyCollections'
