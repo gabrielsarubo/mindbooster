@@ -17,12 +17,12 @@ const CardListItem = ({ item, onPressEdit, onPressDelete }) => {
           </View>
         </View>
         <View style={styles.wrapperButtons}>
-          <TouchableOpacity onPress={() => onPressEdit(item.key)}>
+          <TouchableOpacity onPress={() => onPressEdit(item.id)}>
             <View style={styles.button}>
               <MaterialIcons name='create' size={28} color='#4472C4' />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => onPressDelete(item.key)}>
+          <TouchableOpacity onPress={() => onPressDelete(item.id)}>
             <View style={styles.button}>
               <MaterialIcons name='delete-forever' size={28} color='#E91010' />
             </View>

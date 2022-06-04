@@ -2,10 +2,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useState } from 'react'
 import { Alert, Image, View, StyleSheet } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 // Action creators
-import * as actionCreators from '../state/actions'
+import * as actionCreators from '../store/actions'
 
 // Custom Components
 import SignInForm from '../components/SignInForm'
@@ -15,9 +15,6 @@ import Logo from '../../assets/logo-mindbooster-90x90.png'
 import Logotype from '../../assets/logotype-mindbooster.png'
 
 const SignInScreen = ({ navigation }) => {
-  // Removing the line below creates a memory leak warning
-  useSelector(state => state.user)
-
   const dispatch = useDispatch()
 
   const { logUserIn } = bindActionCreators(actionCreators, dispatch)

@@ -6,23 +6,30 @@ import CustomButton from '../components/CustomButton'
 import CustomTextInput from '../components/CustomTextInput'
 import CustomImageInput from '../components/CustomImageInput'
 
-import { CollectionContext } from '../contexts/CollectionContext'
+// Redux
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actionCreators from '../store/actions'
 
 const EditCollectionScreen = ({ route, navigation }) => {
-  const { collections, createCollection, editCollectionMetadata } = useContext(CollectionContext)
+  // Redux Dispatchers 
+  const collections = useSelector(state => state.collection.collections)
+  const dispatch = useDispatch()
+  const { createCollection, updateCollectionMetada } = bindActionCreators(actionCreators, dispatch)
+
+  // DEPRECATED const { collections, createCollection, editCollectionMetadata } = useContext(CollectionContext)
 
   const [action, setAction] = useState()
   const [collectionId, setCollectionId] = useState()
-
-  const [collection, setCollection] = useState({})
 
   // state for the form inputs
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
   const [selectedImage, setSelectedImage] = useState(null)
+  const [imageUrl, setImageUrl] = useState()
 
   useEffect(() => {
-    const { action, collectionId } = route.params
+    const { action, collectionId, thumbnailUrl } = route.params
     
     setAction(action)
     setCollectionId(collectionId)
@@ -30,13 +37,11 @@ const EditCollectionScreen = ({ route, navigation }) => {
     // If user wants to edit a collection,
     // then recover collection data from CollectionContext and store it away in state
     if (action === 'edit') {
-      const _collection = collections.find(collection => collection.key === collectionId)
-
-      setCollection(_collection)
+      const _collection = collections.find(collection => collection.id === collectionId)
 
       setTitle(_collection.title)
       setDesc(_collection?.desc)
-      _collection.thumbnailLocalUri && setSelectedImage({ localUri: _collection.thumbnailLocalUri})
+      setImageUrl(thumbnailUrl)
     }
   }, [])
 
@@ -59,30 +64,76 @@ const EditCollectionScreen = ({ route, navigation }) => {
     setSelectedImage({ localUri: pickerResult.uri })
   }
 
-  const handlePressCreate = () => {
-    const newCollection = {
-      key: Math.random() * 10,
-      title: title,
-      desc: desc,
-      thumbnailLocalUri: selectedImage.localUri,
-      cardsList: [],
+  /**
+   * Converte uma imagem para um Blob
+   * @param {String} uri image local uri retrived from ImagePicker
+   * @returns {Blob} uma variavel do tipo Blob que corresponde a imagem
+   */
+  const convertImageURIToBlob = async (uri) => {
+    try {
+      const response = await fetch(uri)
+      const blob = await response.blob()
+      return blob
+    } catch (error) {
+      throw new Error(error)
     }
-
-    createCollection(newCollection)
-    
-    navigation.goBack()
   }
 
-  const handlePressUpdate = () => {
+  const handlePressCreate = () => {
+    const newCollection = {
+      title: title,
+      desc: desc,
+    }
+
+    const uri = selectedImage.localUri
+    const filename = uri.slice(uri.lastIndexOf('/')+1, uri.length)
+
+    convertImageURIToBlob(uri)
+      .then(blob => {
+        // Successfully converted image URI to Blob
+        // Create obj to store blob and image name
+        const imageData = {
+          blob,
+          contentType: blob.type,
+          filename
+        }
+        createCollection(newCollection, imageData)
+        navigation.goBack()
+      })
+      .catch(() => {
+        alert('Algum erro aconteceu ao tentar converter a imagem de thumbnail.')
+      })
+  }
+
+  const handlePressUpdate = () => {    
     const newMetadata = {
       title: title,
       desc: desc,
-      thumbnailLocalUri: selectedImage.localUri,
     }
-    
-    editCollectionMetadata(collectionId, newMetadata)
-    
-    navigation.goBack()
+
+    if (selectedImage?.localUri) {
+      const uri = selectedImage.localUri
+      const filename = uri.slice(uri.lastIndexOf('/') + 1, uri.length)
+
+      convertImageURIToBlob(uri)
+        .then(blob => {
+          // Successfully converted image URI to Blob
+          // Create obj to store blob and image name
+          const imageData = {
+            blob,
+            contentType: blob.type,
+            filename
+          }
+          updateCollectionMetada(collectionId, newMetadata, imageData)
+          navigation.goBack()
+        })
+        .catch(() => {
+          alert('Algum erro aconteceu ao tentar converter a imagem de thumbnail.')
+        })
+    } else {
+      updateCollectionMetada(collectionId, newMetadata)
+      navigation.goBack()
+    }
   }
 
   return (
@@ -106,7 +157,7 @@ const EditCollectionScreen = ({ route, navigation }) => {
               numberOfLines={4}
             />
             <CustomImageInput
-              selectedImage={selectedImage}
+              selectedImage={selectedImage?.localUri || imageUrl}
               openImagePickerAsync={openImagePickerAsync}
             />
           </View>

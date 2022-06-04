@@ -1,6 +1,8 @@
-import { useEffect, useState, useContext } from 'react'
-
-import { Alert, View, FlatList, StyleSheet } from 'react-native'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actionCreators from '../store/actions'
+import { Text, Alert, View, FlatList, StyleSheet } from 'react-native'
 
 import { globalStyles } from '../styles/global'
 
@@ -9,23 +11,24 @@ import CustomButton from '../components/CustomButton'
 import CustomFloatingButton from '../components/CustomFloatingButton'
 import CardListItem from '../components/CardListItem'
 
-import { CollectionContext } from '../contexts/CollectionContext'
-
 const CollectionScreen = ({ navigation, route }) => {
-  const { collections, deleteCard } = useContext(CollectionContext)
+  // Redux store and actions
+  const collections = useSelector(state => state.collection.collections)
+  const dispatch = useDispatch()
+  const { deleteCard } = bindActionCreators(actionCreators, dispatch)
 
   const [cards, setCards] = useState([])
   const [filteredCards, setFilteredCards] = useState([])
   const [filter, setFilter] = useState('')
 
-  const [collectionKey, setCollectionKey] = useState()
+  const [collectionId, setCollectionId] = useState()
 
   useEffect(() => {
-    // Recover the cards from the CollectionContext using the collection key
-    const _collectionKey = route.params.collection.key
-    setCollectionKey(_collectionKey)
+    // Recover the cards from the Collection state in Redux using the collection ID
+    const collectionId = route.params?.collectionId
+    setCollectionId(collectionId)
 
-    const _collection = collections.find(collection => collection.key === _collectionKey)
+    const _collection = collections.find(collection => collection.id === collectionId)
 
     setCards([..._collection.cardsList])
     setFilteredCards([..._collection.cardsList])
@@ -50,17 +53,17 @@ const CollectionScreen = ({ navigation, route }) => {
     navigation.navigate('EditCard', {
       action: 'edit',
       cardId: cardId,
-      collectionId: collectionKey
+      collectionId: collectionId
     })
   }
 
-  const handlePressDelete = (key) => {
+  const handlePressDelete = (cardId) => {
     Alert.alert(
       'Apagar cartão',
       'Tem certeza que gostaria de apagar este cartão?',
       [
         { text: 'Cancelar', },
-        { text: 'Apagar', onPress: () => deleteCard(collectionKey, key) }
+        { text: 'Apagar', onPress: () => deleteCard(collectionId, cardId) }
       ],
       { cancelable: true, },
     )
@@ -96,18 +99,28 @@ const CollectionScreen = ({ navigation, route }) => {
         />
       </View>
 
-      <FlatList
-        data={filteredCards}
-        renderItem={renderItemCard}
-        style={styles.flatList}
-        showsVerticalScrollIndicator={false}
-      />
+      {
+        cards.length > 0
+          ? (
+            <FlatList
+              data={filteredCards}
+              renderItem={renderItemCard}
+              keyExtractor={(item, index) => index}
+              style={styles.flatList}
+              showsVerticalScrollIndicator={false}
+            />
+          ) : (
+            <View style={globalStyles.infoMessageContainer}>
+              <Text style={globalStyles.infoMessage}>Não existe nenhum flashcard ainda.</Text>
+            </View>
+          )
+      }
 
       <View style={globalStyles.floatingButtonWrapper}>
         <CustomFloatingButton
           onPress={() => navigation.navigate('EditCard', {
             action: 'create',
-            collectionId: collectionKey
+            collectionId: collectionId
           })}
         />
       </View>

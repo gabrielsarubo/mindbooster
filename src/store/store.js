@@ -12,5 +12,8 @@ import rootReducer from './reducers'
 export const store = createStore(
   rootReducer,
   {},
-  compose(applyMiddleware(thunk), devToolsEnhancer())
+  compose(
+    applyMiddleware(thunk),
+    devToolsEnhancer()
+  )
 )

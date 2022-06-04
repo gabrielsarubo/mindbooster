@@ -10,7 +10,7 @@ import AppRoute from './src/routes'
 import CollectionContextProvider from './src/contexts/CollectionContext'
 
 // Redux store
-import { store } from './src/state/store'
+import { store } from './src/store/store'
 
 const App = () => {
   return (

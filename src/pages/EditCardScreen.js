@@ -1,18 +1,20 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
+// Redux
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actionCreators from '../store/actions'
 
 import CustomButton from '../components/CustomButton'
 
-import { CollectionContext } from '../contexts/CollectionContext'
-
 const EditCardScreen = ({ route, navigation }) => {
-  const { collections, createCard, editCard } = useContext(CollectionContext)
+  const dispatch = useDispatch()
+  const { createCard, editCard } = bindActionCreators(actionCreators, dispatch)
+  const collections = useSelector(state => state.collection.collections)
   
   const [action, setAction] = useState()
   const [cardId, setCardId] = useState()
   const [collectionId, setCollectionId] = useState()
-
-  const [card, setCard] = useState({})
 
   const [front, setFront] = useState('')
   const [back, setBack] = useState('')
@@ -21,17 +23,16 @@ const EditCardScreen = ({ route, navigation }) => {
     const { action, cardId, collectionId } = route.params
 
     setAction(action)
-    setCardId(cardId)
     setCollectionId(collectionId)
 
     // If user wants to edit a card,
-    // then recover card from CollectionContext and store it in state
+    // then recover card from Redux state and keep it in the component state
     if (action === 'edit') {
+      setCardId(cardId)
+
       const _card =
-        collections.find(collection => collection.key === collectionId)
-          .cardsList.find(card => card.key === cardId)
-  
-      setCard(_card)
+        collections.find(collection => collection.id === collectionId)
+          .cardsList.find(card => card.id === cardId)
 
       setFront(_card.front)
       setBack(_card.back)
@@ -39,14 +40,12 @@ const EditCardScreen = ({ route, navigation }) => {
   }, [])
 
   const handlePressCreate = () => {
-    // TODO change the way the ID/key of the card is generated
+    // TODO change the way the ID of the card is generated
     const _card = {
-      key: Math.random() * 10,
+      id: Math.random().toString(),
       front: front,
       back: back,
     }
-
-    setCard(_card)
 
     createCard(collectionId, _card)
 
@@ -56,14 +55,12 @@ const EditCardScreen = ({ route, navigation }) => {
   const handlePressUpdate = () => {
     // TODO change the way the ID/key of the card is generated
     const _card = {
-      key: card.key,
+      id: cardId,
       front: front,
       back: back,
     }
 
-    setCard(_card)
-
-    editCard(collectionId, cardId, _card)
+    editCard(collectionId, _card)
 
     navigation.goBack()
   }

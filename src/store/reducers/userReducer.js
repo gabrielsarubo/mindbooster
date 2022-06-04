@@ -1,5 +1,6 @@
 const initialState = {
   userToken: null,
+  uid: null,
 }
 
 const userReducer = (state = initialState, action) => {
@@ -8,6 +9,14 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         userToken: action.payload.userToken,
+        uid: action.payload.uid,
+      }
+
+    case 'SIGN_UP':
+      return {
+        ...state,
+        userToken: action.payload.userToken,
+        uid: action.payload.uid,
       }
 
     case 'LOG_USER_OUT':

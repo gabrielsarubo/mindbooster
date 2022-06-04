@@ -3,19 +3,32 @@ import { TouchableOpacity, View, Text, Image, StyleSheet } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 // Assets
 import ThumbnailPlaceholder from '../../assets/placeholder-thumbnail.png'
+import { useState, useEffect } from 'react'
+
+import firebase from '../config/firebase'
 
 const CollectionListItem = ({ collection, onPressHandler, onPressEdit, onPressDelete }) => {
+  const [url, setUrl] = useState()
+
+  useEffect(() => {
+    // get thumbnail from Firebase Storage
+    const storage = firebase.storage()
+    storage.ref(`images/${collection.thumbnail}`)
+      .getDownloadURL()
+      .then(url => {
+        setUrl(url)
+      })
+      .catch(error => console.log(error))
+  }, [collection])
+
   return (
-    <TouchableOpacity onPress={() => onPressHandler(collection)}>
+    <TouchableOpacity onPress={() => onPressHandler(collection.id, collection.title)}>
       <View style={styles.collection_list_item}>
         <View style={styles.wrapper_image_title}>
           <View style={styles.wrapper_image}>
             <Image
-              source={
-                collection?.thumbnailLocalUri
-                  ? { uri: collection.thumbnailLocalUri }
-                  : ThumbnailPlaceholder
-              }
+              source={{ uri: url }}
+              defaultSource={ ThumbnailPlaceholder }
               style={styles.thumbnail}
             />
           </View>
@@ -24,10 +37,13 @@ const CollectionListItem = ({ collection, onPressHandler, onPressEdit, onPressDe
           </View>
         </View>
         <View style={styles.wrapper_buttons}>
-          <TouchableOpacity onPress={() => onPressEdit(collection.key)}>
+          <TouchableOpacity onPress={() => onPressEdit({
+            collectionId: collection.id,
+            thumbnailUrl: url,
+          })}>
             <MaterialIcons name='create' size={24} color='#4472C4' />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => onPressDelete(collection.key)}>
+          <TouchableOpacity onPress={() => onPressDelete(collection.id)}>
             <MaterialIcons name='delete-forever' size={24} color='#E91010' />
           </TouchableOpacity>
         </View>
