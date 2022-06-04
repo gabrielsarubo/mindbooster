@@ -1,4 +1,3 @@
-import { Platform } from 'expo-modules-core'
 import { useState, useEffect, useContext } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
@@ -7,7 +6,6 @@ import CustomButton from '../components/CustomButton'
 import CustomTextInput from '../components/CustomTextInput'
 import CustomImageInput from '../components/CustomImageInput'
 
-import { CollectionContext } from '../contexts/CollectionContext'
 // Redux
 import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -66,32 +64,45 @@ const EditCollectionScreen = ({ route, navigation }) => {
     setSelectedImage({ localUri: pickerResult.uri })
   }
 
+  /**
+   * Converte uma imagem para um Blob
+   * @param {String} uri image local uri retrived from ImagePicker
+   * @returns {Blob} uma variavel do tipo Blob que corresponde a imagem
+   */
+  const convertImageURIToBlob = async (uri) => {
+    try {
+      const response = await fetch(uri)
+      const blob = await response.blob()
+      return blob
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
   const handlePressCreate = () => {
     const newCollection = {
       title: title,
       desc: desc,
     }
 
-    /**
-     * Example of localUri: 'data:image/png;base64,iVBORw0KGgoAAACBt/w/ls2PLhOph2QAAAA...'
-     * uri = 'iVBORw0KGgoAAACBt/w/ls2PLhOph2QAAAA...'
-     * 
-     * TODO: change how the filename is retrieved
-     * filename = 'colors.png' which is the title of the collections without whitespaces,
-     * lowercased and with a PNG extension hardcoded
-     */
     const uri = selectedImage.localUri
-    const filename = `thumbnail_${title.trim().replace(' ', '').toLowerCase()}${new Date().toLocaleString().replace(/[^0-9]/g, '')}.png`
+    const filename = uri.slice(uri.lastIndexOf('/')+1, uri.length)
 
-    // TODO In case user is on Android, dont let them update a image
-    if (Platform.OS === 'android') {
-      alert('Nao e possivel criar ou atualizar uma colecao via Android ainda.')
-      return
-    }
-
-    createCollection(newCollection, {uri, filename})
-    
-    navigation.goBack()
+    convertImageURIToBlob(uri)
+      .then(blob => {
+        // Successfully converted image URI to Blob
+        // Create obj to store blob and image name
+        const imageData = {
+          blob,
+          contentType: blob.type,
+          filename
+        }
+        createCollection(newCollection, imageData)
+        navigation.goBack()
+      })
+      .catch(() => {
+        alert('Algum erro aconteceu ao tentar converter a imagem de thumbnail.')
+      })
   }
 
   const handlePressUpdate = () => {    
@@ -101,21 +112,28 @@ const EditCollectionScreen = ({ route, navigation }) => {
     }
 
     if (selectedImage?.localUri) {
-      // TODO In case user is on Android, dont let them update a image
-      if (Platform.OS === 'android') {
-        alert('Nao e possivel criar ou atualizar uma colecao via Android ainda.')
-        return
-      }
-      
       const uri = selectedImage.localUri
-      const filename = `thumbnail_${title.trim().replace(' ', '').toLowerCase()}${new Date().toLocaleString().replace(/[^0-9]/g, '')}.png`
+      const filename = uri.slice(uri.lastIndexOf('/') + 1, uri.length)
 
-      updateCollectionMetada(collectionId, newMetadata, {uri, filename})
+      convertImageURIToBlob(uri)
+        .then(blob => {
+          // Successfully converted image URI to Blob
+          // Create obj to store blob and image name
+          const imageData = {
+            blob,
+            contentType: blob.type,
+            filename
+          }
+          updateCollectionMetada(collectionId, newMetadata, imageData)
+          navigation.goBack()
+        })
+        .catch(() => {
+          alert('Algum erro aconteceu ao tentar converter a imagem de thumbnail.')
+        })
     } else {
       updateCollectionMetada(collectionId, newMetadata)
+      navigation.goBack()
     }
-
-    navigation.goBack()
   }
 
   return (

@@ -1,16 +1,17 @@
 import firebaseApp from "firebase/app"
 import firebase from "../../config/firebase"
 
-export const createCollection = (collection, {uri, filename}) => {
+export const createCollection = (collection, imageData) => {
   return (dispatch, getState) => {
     const { user } = getState()
+    const { blob, contentType, filename } = imageData
 
     // Reference the Firestore database and Storage
     const firestore = firebase.firestore()
     const storage = firebase.storage()
 
     // Make async call to Firebase Storage
-    storage.ref(`images/${filename}`).putString(uri, 'data_url', { contentType: 'image/png'})
+    storage.ref(`images/${filename}`).put(blob, { contentType: contentType})
       .then(() => {
         // Make async call to Firebase Firestore
         firestore.collection('collections').add({
@@ -45,7 +46,7 @@ export const createCollection = (collection, {uri, filename}) => {
   }
 }
 
-export const updateCollectionMetada = (collectionId, metadata, uri = null) => {
+export const updateCollectionMetada = (collectionId, metadata, imageData = null) => {
   return (dispatch) => {
     // Reference the Firestore database and Storage
     const firestore = firebase.firestore()
@@ -55,13 +56,15 @@ export const updateCollectionMetada = (collectionId, metadata, uri = null) => {
 
     // If user changed image, upload the new image to Storage
     // and then update collection doc in Firestore
-    if (uri != null) {
-      const storageRef = storage.ref(`images/${uri.filename}`)
-      storageRef.putString(uri.uri, 'data_url', { contentType: 'image/png' })
+    if (imageData != null) {
+      const { blob, contentType, filename } = imageData
+
+      const storageRef = storage.ref(`images/${filename}`)
+      storageRef.put(blob, { contentType: contentType })
         .then(() => {
           collectionRef.update({
             ...metadata,
-            thumbnail: uri.filename,
+            thumbnail: filename,
           })
             .then(() => {
               dispatch({
