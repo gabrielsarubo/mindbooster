@@ -20,16 +20,16 @@ Principais funcionalidades do app:
 
 ### Próximas Funcionalidades
 
-- [ ] Recuperação e apresentação da lista de coleções do banco de dados;
-- [ ] Persistência do cadastro de uma nova coleção em banco de dados;
-- [ ] Alteração de uma coleção existente no banco de dados;
-- [ ] Exclusão de uma coleção no banco de dados;
-- [ ] Recuperação e apresentação da lista de flashcards de uma coleção;
-- [ ] Persistência do cadastro de um novo flashcard em banco de dados;
-- [ ] Alteração de uma flashcard existente no banco de dados;
-- [ ] Exclusão de flashcard no banco de dados;
+- [x] Recuperação e apresentação da lista de coleções do banco de dados;
+- [x] Persistência do cadastro de uma nova coleção em banco de dados;
+- [x] Alteração de uma coleção existente no banco de dados;
+- [x] Exclusão de uma coleção no banco de dados;
+- [x] Recuperação e apresentação da lista de flashcards de uma coleção;
+- [x] Persistência do cadastro de um novo flashcard em banco de dados;
+- [x] Alteração de uma flashcard existente no banco de dados;
+- [x] Exclusão de flashcard no banco de dados;
 - [x] Filtragem de elementos; 
-- [ ] Uso do REDUX para manter o estado das coleções e cartões;
+- [x] Uso do REDUX para manter o estado das coleções e cartões;
 - [x] Carregamento dos flashcards no jogo com a opção virar conforme no protótipo.
 
 ## 🚀 Tecnologias
