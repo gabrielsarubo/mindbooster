@@ -1,5 +1,6 @@
 import { TouchableOpacity, Image, View, Text, StyleSheet } from 'react-native'
 
+import ThumbnailPlaceholder from '../../assets/placeholder-thumbnail.png'
 import { MaterialIcons } from '@expo/vector-icons'
 
 const CustomImageInput = ({ openImagePickerAsync, selectedImage }) => {
@@ -8,10 +9,11 @@ const CustomImageInput = ({ openImagePickerAsync, selectedImage }) => {
       <Text style={styles.label}>Imagem</Text>
       <View style={styles.body}>
         <TouchableOpacity onPress={openImagePickerAsync} style={styles.content}>
-          {selectedImage !== null
+          {selectedImage
             ? (
               <Image
                 source={{ uri: selectedImage }}
+                defaultSource={ ThumbnailPlaceholder }
                 style={styles.thumbnail}
               />
             )
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    opacity: 0.8,
+    color: 'rgba(0,0,0,0.4)',
     fontSize: 16,
   },
 

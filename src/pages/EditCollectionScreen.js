@@ -26,7 +26,6 @@ const EditCollectionScreen = ({ route, navigation }) => {
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
   const [selectedImage, setSelectedImage] = useState(null)
-  const [imageUrl, setImageUrl] = useState()
 
   useEffect(() => {
     const { action, collectionId, thumbnailUrl } = route.params
@@ -41,7 +40,7 @@ const EditCollectionScreen = ({ route, navigation }) => {
 
       setTitle(_collection.title)
       setDesc(_collection?.desc)
-      setImageUrl(thumbnailUrl)
+      setSelectedImage({ localUri: thumbnailUrl })
     }
   }, [])
 
@@ -157,7 +156,7 @@ const EditCollectionScreen = ({ route, navigation }) => {
               numberOfLines={4}
             />
             <CustomImageInput
-              selectedImage={selectedImage?.localUri || imageUrl}
+              selectedImage={selectedImage?.localUri}
               openImagePickerAsync={openImagePickerAsync}
             />
           </View>
