@@ -11,14 +11,25 @@ const CollectionListItem = ({ collection, onPressHandler, onPressEdit, onPressDe
   const [url, setUrl] = useState()
 
   useEffect(() => {
-    // get thumbnail from Firebase Storage
+    let _isMounted = true
+
+    // Get thumbnail from Firebase Storage
     const storage = firebase.storage()
     storage.ref(`images/${collection.thumbnail}`)
       .getDownloadURL()
       .then(url => {
-        setUrl(url)
+        if (_isMounted) {
+          setUrl(url)
+        }
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        console.log(error)
+      })
+
+    // Cleanup function
+    return () => {
+      _isMounted = false
+    }
   }, [collection])
 
   return (

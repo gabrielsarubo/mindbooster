@@ -18,8 +18,13 @@ const MyCollectionsScreen = ({ navigation }) => {
   const { watchCollections, deleteCollection } = bindActionCreators(actionCreators, dispatch)
 
   useEffect(() => {
-    // Listen to changes in the Redux store
-    watchCollections()
+    // Listen to real time changes in Firestore and then store them in Redux
+    const unsub = watchCollections()
+
+    return () => {
+      // Unsubscribe from watchCollections when component unmounts
+      unsub()
+    }
   }, [])
 
   const handlePressEdit = ({collectionId, thumbnailUrl}) => {

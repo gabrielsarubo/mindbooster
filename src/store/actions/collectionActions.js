@@ -127,7 +127,7 @@ export const watchCollections = () => {
     const firestore = firebase.firestore()
 
     // Create a query snapshot to listen to multiple docs in a collection
-    firestore
+    const unsub = firestore
       .collection('collections')
       .where('userId', '==', user.uid)
       .onSnapshot(querySnapshot => {
@@ -146,6 +146,8 @@ export const watchCollections = () => {
           collections
         })
       })
+
+    return unsub
   }
 }
 
