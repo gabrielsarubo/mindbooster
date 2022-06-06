@@ -65,5 +65,8 @@ export const logUserOut = () => {
     dispatch({
       type: 'LOG_USER_OUT',
     })
+    dispatch({
+      type: 'CLEAR_COLLECTIONS_STATE'
+    })
   }
 }

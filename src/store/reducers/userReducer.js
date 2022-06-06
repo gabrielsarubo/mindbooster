@@ -23,6 +23,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         userToken: null,
+        uid: null,
       }
 
     default:
