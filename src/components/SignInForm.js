@@ -61,8 +61,8 @@ const SignInForm = ({ isLoading, handleSignIn }) => {
             ((props.touched.email && props.errors.email) || (props.touched.password && props.errors.password))
             && (
               <View style={globalStyles.errorContainer}>
-                <Text style={globalStyles.errorText}>{props.errors.email}</Text>
-                <Text style={globalStyles.errorText}>{props.errors.password}</Text>
+                {props.errors.email && <Text style={globalStyles.errorText}>{props.errors.email}</Text>}
+                {props.errors.password && <Text style={globalStyles.errorText}>{props.errors.password}</Text>}
               </View>
             )}
         </>

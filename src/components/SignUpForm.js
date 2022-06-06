@@ -70,9 +70,9 @@ const SignUpForm = ({ isLoading, handleSignUp }) => {
               || (props.touched.passwordConfirm && props.errors.passwordConfirm))
             && (
               <View style={globalStyles.errorContainer}>
-                <Text style={globalStyles.errorText}>{props.errors.email}</Text>
-                <Text style={globalStyles.errorText}>{props.errors.password}</Text>
-                <Text style={globalStyles.errorText}>{props.errors.passwordConfirm}</Text>
+                {props.errors.email && <Text style={globalStyles.errorText}>{props.errors.email}</Text>}
+                {props.errors.password && <Text style={globalStyles.errorText}>{props.errors.password}</Text>}
+                {props.errors.passwordConfirm && <Text style={globalStyles.errorText}>{props.errors.passwordConfirm}</Text>}
               </View>
             )}
         </>
