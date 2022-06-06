@@ -12,7 +12,7 @@ const DrawerItemProfile = () => {
         />
       </View>
       <View style={styles.picLabelWrapper}>
-        <Text style={styles.picLabel}>Ana Carolina</Text>
+        <Text style={styles.picLabel}>Jane Doe</Text>
       </View>
     </View>
   )
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     height: 140,
     borderRadius: 140,
     borderWidth: 1,
-    borderColor: '#808080',
+    borderColor: '#3A3361',
   },
   picLabelWrapper: {
     alignItems: 'center',
